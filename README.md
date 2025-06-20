@@ -1,6 +1,6 @@
 # React Nice Resume :page_with_curl:
 
-### [LIVE DEMO](https://master.d3ot2k8dxtwove.amplifyapp.com/)
+### [TEST_ENV](https://master.d2j623qlcgw8p5.amplifyapp.com/#resume)
 
 <div align="center">
 
