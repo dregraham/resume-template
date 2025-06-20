@@ -1,80 +1,52 @@
 {
   "main": {
-    "name":"Resume Project",
-    "description":"I am a web development engineer and I use react and vue.js to develop pages. This project is a resume template that can be used as the project home page or resume page",
+    "name":"Dre's Resume",
+    "description":"Welcome to my website! I am an aspiring Cloud Engineer and am using this website to showcase my talent. Feel free to click around, try to break something and most of all...have fun!",
     "image":"profilepic.jpg",
-    "bio":"Use this bio section as your way of describing yourself and saying what you do, what technologies you like to use or feel most comfortable with, describing your personality, or whatever else you feel like throwing in.",
+    "bio":"This is my bio which is still in progress...",
     "contactmessage":"Here is where you should write your message to readers to have them get in contact with you.",
-    "email": "youremailhere@gmail.com",
+    "email": "andre.graham709@gmail.com",
     "phone": "555-555-5555",
-    "github":"https://github.com/Impesud/react-resume",
-    "project":"https://github.com/Impesud/react-resume",
+    "github":"https://github.com/dregraham/resume-test",
+    "project":"https://github.com/dregraham/resume-test",
     "address":{
       "street":"(Your Street)",
       "city":"(Your City)",
       "state":"(Your State)",
       "zip": "(Your Zip/Postal Code)"
     },
-    "website": "https://github.com/Impesud/",
-    "resumedownload":"https://github.com/Impesud/",
+    "website": "https://github.com/dregraham/",
+    "resumedownload":"https://github.com/dregraham/",
     "social":[
       {
-        "name":"facebook",
-        "url":"https://www.facebook.com/Impesud",
-        "className":"fa fa-facebook"
-      },
-      {
-        "name":"twitter",
-        "url":"https://twitter.com/impesud",
-        "className":"fa fa-twitter"
-      },
-      {
         "name":"linkedin",
-        "url":"https://www.linkedin.com/in/erickjara/",
+        "url":"https://www.linkedin.com/in/dregraham/",
         "className":"fa fa-linkedin"
       },
       {
-        "name":"instagram",
-        "url":"https://www.instagram.com/erickjthered/",
-        "className":"fa fa-instagram"
-      },
-      {
         "name":"github",
-        "url":"https://github.com/Impesud/react-resume",
+        "url":"https://github.com/dregraham/resume-test",
         "className":"fa fa-github"
       }
     ]
   },
   "resume":{
-    "skillmessage":"Here you can create a short write-up of your skills to show off to employers",
+    "skillmessage":"Check out my skills here",
     "education":[
       {
-        "school":"University?",
-        "degree":"Masters in Beer tasting",
-        "graduated":"April 2017",
-        "description":"Describe your experience at school, what you learned, what useful skills you have acquired etc."
-      },
-      {
-        "school":"School #1 Maybe College?",
-        "degree":"What did you study 101",
-        "graduated":"March 2013",
+        "school":"Western Governors University",
+        "degree":"B.S. in Cloud Computing",
+        "graduated":"December 2025",
         "description":"Describe your experience at school, what you learned, what useful skills you have acquired etc."
       }
     ],
     "work":[
       {
-        "company":"Awesome Design Studio",
-        "title":"Senior UX God ",
-        "years":"March 2018 - Present",
-        "description":"Describe work, special projects, notable achievements, what technologies you have been working with, and anything else that would be useful for an employer to know."
+        "company":"Auctane",
+        "title":"Escalations Specialist",
+        "years":"May 2019 - Present",
+        "description":"Lots and lots of stuff...:) Coming soon."
       },
-      {
-        "company":"Super Cool Studio",
-        "title":"Junior bug fixer",
-        "years":"March 2017 - February 2018",
-        "description":"Describe work, special projects, notable achievements, what technologies you have been working with, and anything else that would be useful for an employer to know."
-      }
-    ],
     "skills":[
       {
         "name":"PHP",
