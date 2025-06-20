@@ -1,8 +1,8 @@
 # React Nice Resume :page_with_curl:
 
-### [LIVE DEMO](https://master.d3ot2k8dxtwove.amplifyapp.com/)
+### [LIVE DEMO](https://master.d2j623qlcgw8p5.amplifyapp.com/#resume)
 
-Resume made in React 17 + built & deployed in AWS Amplify.
+Resume made in React 17 & deployed using AWS Amplify.
 
 <div align="center">
 
@@ -17,7 +17,7 @@ Resume made in React 17 + built & deployed in AWS Amplify.
 </div>
 
 # About [`particles-bg`](https://github.com/lindelof/particles-bg) Library
-#### This project uses the react particle background component library [https://github.com/lindelof/particles-bg](https://github.com/lindelof/particles-bg). It's very simple. Anyone can be a Musketeer with it.
+#### This project uses the react particle background component library [https://github.com/lindelof/particles-bg](https://github.com/lindelof/particles-bg). It's very simple. Anyone can be a Ninja Turtle with it.
 
 ![img](https://github.com/lindelof/particles-bg/raw/master/image/03.jpg?raw=true)
 
