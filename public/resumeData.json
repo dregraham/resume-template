@@ -1,6 +1,6 @@
 {
   "main": {
-    "name":"Dre's Resume",
+    "name":"Dre Graham",
     "description":"Welcome to my website! I am an aspiring Cloud Solutions Architect/Engineer and am using this website to showcase my talent. Feel free to click around and have fun!",
     "image":"profilepic.jpg",
     "bio":"This is my bio which is still in progress...",
@@ -13,7 +13,7 @@
       "city":"St. Louis",
       "state":"Missouri"
     },
-    "website": "https://github.com/dregraham/",
+    "website": "https://dregraham.com",
     "resumedownload":"https://github.com/dregraham/",
     "social":[
       {
@@ -23,7 +23,7 @@
       },
       {
         "name":"github",
-        "url":"https://github.com/dregraham/resume-test",
+        "url":"https://github.com/dregraham",
         "className":"fa fa-github"
       }
     ]
