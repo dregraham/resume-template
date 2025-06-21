@@ -2,8 +2,6 @@
 
 ### [TEST_ENV](https://master.d2j623qlcgw8p5.amplifyapp.com/#resume)
 
-Resume made in React 17 & deployed using AWS Amplify.
-
 <div align="center">
 
 <img alt="GitHub release (latest by date including pre-releases" src="https://img.shields.io/github/v/release/impesud/react-resume?include_prereleases">
@@ -17,12 +15,12 @@ Resume made in React 17 & deployed using AWS Amplify.
 </div>
 
 # About [`particles-bg`](https://github.com/lindelof/particles-bg) Library
-#### This project uses the react particle background component library [https://github.com/lindelof/particles-bg](https://github.com/lindelof/particles-bg). It's very simple. Anyone can be a Ninja Turtle with it.
+#### This project uses the react particle background component library [https://github.com/lindelof/particles-bg](https://github.com/lindelof/particles-bg). It's very simple. Anyone can be a Musketeer with it.
 
 ![img](https://github.com/lindelof/particles-bg/raw/master/image/03.jpg?raw=true)
 
 # Description
-This project forks from [https://github.com/tbakerx/react-resume-template](https://github.com/tbakerx/react-resume-template) v.1.0.0, we made some modifications and adjustments, thanks to the [author](https://github.com/tbakerx).
+This project forks from [https://github.com/tbakerx/react-resume-template](https://github.com/tbakerx/react-resume-template) v.1.0.0, I made some modifications and adjustments, thanks to the [author](https://github.com/tbakerx).
 
 # Run Project
 ### 1. Clone the project
