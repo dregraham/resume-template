@@ -33,15 +33,15 @@
         "school":"Western Governors University",
         "degree":"B.S. in Cloud Computing",
         "graduated":"December 2025",
-        "description":"Describe your experience at school, what you learned, what useful skills you have acquired etc."
+        "description":"Completed hands-on coursework in Cloud architecture, systems administration, networking, and cybersecurity. Gained experience with AWS and Azure, Linux and Windows server management, resource automation and scaling, and implementing DevOps practices including CI/CD and IaC. Applied ITIL and Agile methodologies in projects involving secure, scalable cloud deployments, database management, and system automation."
       }
     ],
     "work":[
       {
         "company":"Auctane",
-        "title":"Escalations Specialist",
+        "title":"Technical Escalations Specialist, L3",
         "years":"May 2019 - Present",
-        "description":"Lots and lots of stuff...:) Coming soon."
+        "description":"As a Technical Escalations Specialist L3, I lead complex technical escalations and serve as the highest tier of support. Building upon my previous experience with cloud monitoring tools such as Kibana, CloudWatch, DynamoDB, and SUMO, I now architect comprehensive solutions for enterprise-scale technical challenges. I mentor L1-L2 specialists while collaborating directly with engineering teams to resolve critical system issues and develop permanent fixes. My expertise spans advanced SQL optimization, complex database architecture, and cloud-based monitoring systems, allowing me to drive technical innovation and process improvements across the entire support organization."
       }
     ],
     "skills":[
