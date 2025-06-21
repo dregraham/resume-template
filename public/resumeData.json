@@ -4,11 +4,9 @@
     "description":"Welcome to my website! I am an aspiring Cloud Solutions Architect/Engineer and am using this website to showcase my talent. Feel free to click around and have fun!",
     "image":"profilepic.jpg",
     "bio":"This is my bio which is still in progress...",
-    "contactmessage":"Here is where you should write your message to readers to have them get in contact with you.",
+    "contactmessage":"Want to schedule a consultation or have a question? Reach out to me via email or by using the contact form below.",
     "email": "andre.graham709@gmail.com",
-    "phone": "555-555-5555",
     "github":"https://github.com/dregraham/resume-test",
-    "project":"https://github.com/dregraham/resume-test",
     "address":{
       "city":"St. Louis",
       "state":"Missouri"
@@ -29,7 +27,7 @@
     ]
   },
   "resume":{
-    "skillmessage":"Check out my skills here",
+    "skillmessage":"Here are some of my skills and proficiencies. As a lifelong Learner, I am always looking for new ways to grow my skillset.",
     "education":[
       {
         "school":"Western Governors University",
@@ -48,24 +46,24 @@
     ],
     "skills":[
       {
-        "name":"PHP",
+        "name":"AWS",
         "level":"90%"
       },
       {
-        "name":"ReactJs",
+        "name":"Azure",
         "level":"90%"
       },
       {
-        "name":"VueJs",
+        "name":"GCP",
         "level":"50%"
       },
       {
-        "name":"CSS",
+        "name":"GitHub",
         "level":"90%"
       },
       {
-        "name":"AWS",
-        "level":"80%"
+        "name":"SQL",
+        "level":"90%"
       }
     ]
   },
@@ -75,73 +73,73 @@
         "title":"Canadian Wanderlust",
         "category":"My Travel Blog for my post-university travels",
         "image":"01.jpg",
-        "url":"https://github.com/Impesud/react-resume"
+        "url":"https://github.com/dregraham/resume-test"
       },
       {
         "title":"Fury Fighting Gear",
         "category":"(offline now) A fighting gear company I started",
         "image":"02.jpg",
-        "url":"https://github.com/Impesud/react-resume"
+        "url":"https://github.com/dregraham/resume-test"
       },
       {
         "title":"Original Thai Food",
         "category":"Website I built for a restaurant I like in Thailand",
         "image":"03.jpg",
-        "url":"https://github.com/Impesud/react-resume"
+        "url":"https://github.com/dregraham/resume-test"
       },
       {
         "title":"Resume Website",
         "category":"A React based resume website template",
         "image":"04.jpg",
-        "url":"https://github.com/Impesud/react-resume"
+        "url":"https://github.com/dregraham/resume-test"
       },
       {
         "title":"Smirkspace",
         "category":"(MVP Only) A React and Meteor based chat University project.",
         "image":"05.jpg",
-        "url":"https://github.com/Impesud/react-resume"
+        "url":"https://github.com/dregraham/resume-test"
       },
       {
         "title":"Canadian Wanderlust",
         "category":"My Travel Blog for my post-university travels",
         "image":"06.jpg",
-        "url":"https://github.com/Impesud/react-resume"
+        "url":"https://github.com/dregraham/resume-test"
       },
       {
         "title":"Fury Fighting Gear",
         "category":"(offline now) A fighting gear company I started",
         "image":"01.jpg",
-        "url":"https://github.com/Impesud/react-resume"
+        "url":"https://github.com/dregraham/resume-test"
       },
       {
         "title":"Original Thai Food",
         "category":"Website I built for a restaurant I like in Thailand",
         "image":"02.jpg",
-        "url":"https://github.com/Impesud/react-resume"
+        "url":"https://github.com/dregraham/resume-test"
       },
       {
         "title":"Original Thai Food",
         "category":"Website I built for a restaurant I like in Thailand",
         "image":"03.jpg",
-        "url":"https://github.com/Impesud/react-resume"
+        "url":"https://github.com/dregraham/resume-test"
       },
       {
         "title":"Resume Website",
         "category":"A React based resume website template",
         "image":"04.jpg",
-        "url":"https://github.com/Impesud/react-resume"
+        "url":"https://github.com/dregraham/resume-test"
       },
       {
         "title":"Smirkspace",
         "category":"(MVP Only) A React and Meteor based chat University project.",
         "image":"05.jpg",
-        "url":"https://github.com/Impesud/react-resume"
+        "url":"https://github.com/dregraham/resume-test"
       },
       {
         "title":"Canadian Wanderlust",
         "category":"My Travel Blog for my post-university travels",
         "image":"06.jpg",
-        "url":"https://github.com/Impesud/react-resume"
+        "url":"https://github.com/dregraham/resume-test"
       }
     ]
   }
