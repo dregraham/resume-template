@@ -1,7 +1,7 @@
 {
   "main": {
     "name":"Dre's Resume",
-    "description":"Welcome to my website! I am an aspiring Cloud Engineer and am using this website to showcase my talent. Feel free to click around, try to break something and most of all...have fun!",
+    "description":"Welcome to my website! I am an aspiring Cloud Solutions Architect/Engineer and am using this website to showcase my talent. Feel free to click around and have fun!",
     "image":"profilepic.jpg",
     "bio":"This is my bio which is still in progress...",
     "contactmessage":"Here is where you should write your message to readers to have them get in contact with you.",
@@ -10,10 +10,8 @@
     "github":"https://github.com/dregraham/resume-test",
     "project":"https://github.com/dregraham/resume-test",
     "address":{
-      "street":"(Your Street)",
-      "city":"(Your City)",
-      "state":"(Your State)",
-      "zip": "(Your Zip/Postal Code)"
+      "city":"St. Louis",
+      "state":"Missouri"
     },
     "website": "https://github.com/dregraham/",
     "resumedownload":"https://github.com/dregraham/",
