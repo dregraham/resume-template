@@ -1,6 +1,6 @@
 # React Nice Resume :page_with_curl:
 
-### [LIVE DEMO](https://master.d2j623qlcgw8p5.amplifyapp.com/#resume)
+### [TEST_ENV](https://master.d2j623qlcgw8p5.amplifyapp.com/#resume)
 
 Resume made in React 17 & deployed using AWS Amplify.
 
