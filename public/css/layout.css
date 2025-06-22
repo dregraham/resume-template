@@ -17,7 +17,12 @@
    i. Footer
 
 ===================================================================== */
-
+@font-face {
+   font-family: 'scribble';
+   src: url('/css/fonts/scribble/Scribble.ttf') format('truetype');
+   font-weight: normal;
+   font-style: normal;
+}
 /* ------------------------------------------------------------------ */
 /* a. General Styles
 /* ------------------------------------------------------------------ */
@@ -30,8 +35,8 @@ body { background: #0f0f0f; }
 
 header {
    position: relative;
-   height: 800px;
-   min-height: 500px;
+   height: 500px;
+   min-height: 200px;
    width: 100%;
    
    text-align: center;
@@ -50,26 +55,25 @@ header .banner {
    vertical-align: middle;
    margin: 0 auto;
    width: 85%;
-   padding-bottom: 30px;
+   padding-bottom: 10px;
    text-align: center;
 }
 
 header .banner-text { width: 100%; }
 header .banner-text h1 {
-   font: 90px/1.1em 'opensans-bold', sans-serif;
-   color: #fff;
-   letter-spacing: -2px;
+   font: 200px/2.0em 'scribble', cursive;
+   color: #000000b8;
    margin: 0 auto 18px auto;
 }
 header .banner-text h3 {
-   font: 18px/1.9em 'librebaskerville-regular', serif;
-   color: #ddd;
+   font: 18px/1.9em 'Segoe UI bold', serif;
+   color: #000000b8;
    margin: 0 auto;
    width: 70%;
 }
 header .banner-text h3 span,
 header .banner-text h3 a {
-   color: #fff;
+   color: #090909;
 }
 header .banner-text hr {
    width: 60%;
@@ -112,7 +116,7 @@ header .scrolldown a {
    -o-transition: all .3s ease-in-out;
    transition: all .3s ease-in-out;
 }
-header .scrolldown a:hover { color: #0762f9; }
+header .scrolldown a:hover { color: #5BCEFA; }
 
 /* primary navigation
 --------------------------------------------------------------------- */
@@ -135,7 +139,7 @@ header .scrolldown a:hover { color: #0762f9; }
    left: 0;
    top: 0;
 }
-.opaque { background-color: #333; }
+.opaque { background-color: #33333388; }
 
 /* hide toggle button */
 #nav-wrap > a.mobile-btn { display: none; }
@@ -174,7 +178,7 @@ ul#nav li a {
 }
 
 ul#nav li a:active { background-color: transparent !important; }
-ul#nav li.current a { color: #fe6928; }
+ul#nav li.current a { color: #000000; }
 
 
 /* ------------------------------------------------------------------ */
@@ -182,7 +186,7 @@ ul#nav li.current a { color: #fe6928; }
 /* ------------------------------------------------------------------ */
 
 #about {
-   background: #000524;
+   background: opacity(0%);
    padding-top: 96px;
    padding-bottom: 66px;
    overflow: hidden;
@@ -198,12 +202,12 @@ ul#nav li.current a { color: #fe6928; }
 }
 #about p {
    line-height: 30px;
-   color: #ccc;
+   color: #000000;
 }
 #about .profile-pic {
    position: relative;
-   width: 120px;
-   height: 120px;
+   width: 100px;
+   height: 100px;
    border-radius: 100%;
 }
 #about .contact-details { width: 41.66667%; }
@@ -214,7 +218,7 @@ ul#nav li.current a { color: #fe6928; }
 #about .main-col { padding-right: 5%; }
 #about .download .button {
    margin-top: 6px;
-   background: #444;
+   background: #000000;
 }
 #about .download .button:hover {
    background: #fff;
@@ -231,10 +235,11 @@ ul#nav li.current a { color: #fe6928; }
 /* ------------------------------------------------------------------ */
 
 #resume {
-   background: #fff;
+   background: #ffffff00;
    padding-top: 90px;
    padding-bottom: 72px;
    overflow: hidden;
+   color: black;
 }
 
 #resume a, #resume a:visited  { color: #0762f9; }
@@ -246,7 +251,7 @@ ul#nav li.current a { color: #fe6928; }
    letter-spacing: 1px;
 }
 #resume h1 span {
-   border-bottom: 3px solid #0762f9;
+   border-bottom: 3px solid #05306c;
    padding-bottom: 6px;
 }
 #resume h3 {
@@ -259,11 +264,11 @@ ul#nav li.current a { color: #fe6928; }
 .education, .work {
    margin-bottom: 48px;
    padding-bottom: 24px;
-   border-bottom: 1px solid #E8E8E8;
+   border-bottom: 1px solid #616161;
 }
 #resume .info {
    font: 16px/24px 'librebaskerville-italic', serif;
-   color: #6E7881;
+   color: #000000;
    margin-bottom: 18px;
    margin-top: 9px;
 }
@@ -408,11 +413,11 @@ ul#nav li.current a { color: #fe6928; }
 }  */
 
 /* ------------------------------------------------------------------ */
-/* e. Portfolio Section
+/* e. Projects Section
 /* ------------------------------------------------------------------ */
 
 #portfolio {
-   background: #ebeeee;
+   background: #ebeeee00;
    padding-top: 90px;
    padding-bottom: 60px;
 }
@@ -422,7 +427,7 @@ ul#nav li.current a { color: #fe6928; }
    letter-spacing: 1px;
    text-align: center;
    margin-bottom: 48px;
-   color: #95A3A3;
+   color: #000000;
 }
 
 /* Portfolio Content */
@@ -591,7 +596,7 @@ ul#nav li.current a { color: #fe6928; }
    font: 18px/24px 'opensans-bold', sans-serif;
    text-transform: uppercase;
    letter-spacing: 3px;
-   color: #fff;
+   color: #000000;
 }
 #call-to-action h1 span { display: none; }
 #call-to-action .header-col h1:before {
@@ -602,14 +607,14 @@ ul#nav li.current a { color: #fe6928; }
    line-height: 72px;
    text-align: left;
    float: left;
-   color: #fff;
+   color: #000000;
 }
 #call-to-action .action {
    margin-top: 12px;
 }
 #call-to-action h2 {
    font: 28px/36px 'opensans-bold', sans-serif;
-   color: #EBEEEE;
+   color: #000000;
    margin-bottom: 6px;
 }
 #call-to-action h2 a {
@@ -789,10 +794,10 @@ call-to-action .button {
 /* ------------------------------------------------------------------ */
 
 #contact {
-   background: #191919;
+   background: opacity(0%);
    padding-top: 96px;
    padding-bottom: 102px;
-   color: #636363;
+   color:#000000
 }
 #contact .section-head { margin-bottom: 42px; }
 
@@ -803,7 +808,7 @@ call-to-action .button {
    font: 18px/24px 'opensans-bold', sans-serif;
    text-transform: uppercase;
    letter-spacing: 3px;
-   color: #EBEEEE;
+   color: #000000;
    margin-bottom: 6px;
 }
 #contact h1 span { display: none; }
@@ -815,12 +820,12 @@ call-to-action .button {
    line-height: 72px;
    text-align: left;
    float: left;
-   color: #ebeeee;
+   color: #000000;
 }
 
 #contact h4 {
    font: 16px/24px 'opensans-bold', sans-serif;
-   color: #EBEEEE;
+   color: #000000;
    margin-bottom: 6px;
 }
 #contact p.lead {
@@ -835,7 +840,7 @@ call-to-action .button {
 #contact label {
    font: 15px/24px 'opensans-bold', sans-serif;
    margin: 12px 0;
-   color: #EBEEEE;
+   color: #000000;
 	display: inline-block;
 	float: left;
    width: 26%;
@@ -844,8 +849,8 @@ call-to-action .button {
 #contact textarea,
 #contact select {
    padding: 10px 20px;
-	color: #eee;
-	background: #373233;
+	color: #eeeeee00;
+	background: opacity(0%);
 	margin-bottom: 42px;
 	border: 0;
 	outline: none;
@@ -856,15 +861,15 @@ call-to-action .button {
 #contact input:focus,
 #contact textarea:focus,
 #contact select:focus {
-	color: #fff;
-	background-color: #0762f9;
+	color: #000000;
+	background-color: #ffffff;
 }
 #contact button.submit {
 	text-transform: uppercase;
 	letter-spacing: 3px;
-	color:#fff;
-   background: #0D0D0D;
-	border: none;
+	color:#0D0D0D;
+   background: #FFF;
+	border: #0D0D0D;
    cursor: pointer;
    height: auto;
    display: inline-block;
@@ -876,7 +881,7 @@ call-to-action .button {
 	background: #fff;
 }
 #contact span.required {
-	color: #0762f9;
+	color: #e10000;
 	font-size: 13px;
 }
 #message-warning, #message-success {
@@ -990,7 +995,7 @@ footer .social-links li:first-child { margin-left: 0; }
 	display: block;
 	width: 60px;
 	height: 60px;
-	background-color: #525252;
+	background-color: #FFFFFF;
 
 	-webkit-transition: all 0.2s ease-in-out;
    -moz-transition: all 0.2s ease-in-out;
@@ -998,12 +1003,12 @@ footer .social-links li:first-child { margin-left: 0; }
    -ms-transition: all 0.2s ease-in-out;
    transition: all 0.2s ease-in-out;
 
-   color: #fff;
+   color: opacity(0%);
    font-size: 21px;
    line-height: 60px;
  	border-radius: 100%;
 }
-#go-top a:hover { background-color: #0F9095; }
+#go-top a:hover { background-color: #5BCEFA; }
 
 
 .social .btn:first-child{
@@ -1020,5 +1025,5 @@ footer .social-links li:first-child { margin-left: 0; }
    background-color: #1abc9c !important;
 }
 .github-btn{
-   background-color: #34495e !important;
+   background-color: #000000 !important;
 }

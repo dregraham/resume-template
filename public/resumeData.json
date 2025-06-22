@@ -3,7 +3,7 @@
     "name":"Dre Graham",
     "description":"Welcome to my website! I am an aspiring Cloud Solutions Architect/Engineer and am using this website to showcase my talent. Feel free to click around and have fun!",
     "image":"profilepic.jpg",
-    "bio":"This is my bio which is still in progress...",
+    "bio":"I live in Saint Louis, Missouri, and I am currently pursuing a B.S. in Cloud Computing from Western Governors University. I have a passion for cloud technologies and aspire to become a Cloud Solutions Architect/Engineer. My experience includes working as a Technical Escalations Specialist at Auctane, where I lead complex technical escalations and mentor junior specialists. I have hands-on experience with AWS, Azure, GCP, SQL, and GitHub.",
     "contactmessage":"Want to schedule a consultation or have a question? Reach out to me via email or by using the contact form below.",
     "email": "andre.graham709@gmail.com",
     "github":"https://github.com/dregraham/resume-test",
@@ -27,7 +27,7 @@
     ]
   },
   "resume":{
-    "skillmessage":"Here are some of my skills and proficiencies. As a lifelong Learner, I am always looking for new ways to grow my skillset.",
+    "skillmessage":"Cloud Models and Technologies",
     "education":[
       {
         "school":"Western Governors University",
@@ -70,75 +70,21 @@
   "portfolio":{
     "projects": [
       {
-        "title":"Canadian Wanderlust",
-        "category":"My Travel Blog for my post-university travels",
+        "title":"Cloud Database Project",
+        "category":"A cloud database project that I worked on during my studies at WGU",
         "image":"01.jpg",
         "url":"https://github.com/dregraham/resume-test"
       },
       {
-        "title":"Fury Fighting Gear",
-        "category":"(offline now) A fighting gear company I started",
+        "title":"AI Project",
+        "category":"A project I used AI to complete.",
         "image":"02.jpg",
         "url":"https://github.com/dregraham/resume-test"
       },
       {
-        "title":"Original Thai Food",
-        "category":"Website I built for a restaurant I like in Thailand",
+        "title":"Multi-Cloud Deployment",
+        "category":"A cloud deployment project that includes multiple cloud providers.",
         "image":"03.jpg",
-        "url":"https://github.com/dregraham/resume-test"
-      },
-      {
-        "title":"Resume Website",
-        "category":"A React based resume website template",
-        "image":"04.jpg",
-        "url":"https://github.com/dregraham/resume-test"
-      },
-      {
-        "title":"Smirkspace",
-        "category":"(MVP Only) A React and Meteor based chat University project.",
-        "image":"05.jpg",
-        "url":"https://github.com/dregraham/resume-test"
-      },
-      {
-        "title":"Canadian Wanderlust",
-        "category":"My Travel Blog for my post-university travels",
-        "image":"06.jpg",
-        "url":"https://github.com/dregraham/resume-test"
-      },
-      {
-        "title":"Fury Fighting Gear",
-        "category":"(offline now) A fighting gear company I started",
-        "image":"01.jpg",
-        "url":"https://github.com/dregraham/resume-test"
-      },
-      {
-        "title":"Original Thai Food",
-        "category":"Website I built for a restaurant I like in Thailand",
-        "image":"02.jpg",
-        "url":"https://github.com/dregraham/resume-test"
-      },
-      {
-        "title":"Original Thai Food",
-        "category":"Website I built for a restaurant I like in Thailand",
-        "image":"03.jpg",
-        "url":"https://github.com/dregraham/resume-test"
-      },
-      {
-        "title":"Resume Website",
-        "category":"A React based resume website template",
-        "image":"04.jpg",
-        "url":"https://github.com/dregraham/resume-test"
-      },
-      {
-        "title":"Smirkspace",
-        "category":"(MVP Only) A React and Meteor based chat University project.",
-        "image":"05.jpg",
-        "url":"https://github.com/dregraham/resume-test"
-      },
-      {
-        "title":"Canadian Wanderlust",
-        "category":"My Travel Blog for my post-university travels",
-        "image":"06.jpg",
         "url":"https://github.com/dregraham/resume-test"
       }
     ]
