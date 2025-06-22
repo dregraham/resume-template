@@ -1,3 +1,5 @@
+@import url('fonts.css');
+
 /*
 =====================================================================
 *   Ceevee v1.0 Layout Stylesheet
@@ -17,12 +19,6 @@
    i. Footer
 
 ===================================================================== */
-@font-face {
-   font-family: 'scribble';
-   src: url('/css/fonts/scribble/Scribble.ttf') format('truetype');
-   font-weight: normal;
-   font-style: normal;
-}
 /* ------------------------------------------------------------------ */
 /* a. General Styles
 /* ------------------------------------------------------------------ */
@@ -56,14 +52,16 @@ header .banner {
    margin: 0 auto;
    width: 85%;
    padding-bottom: 10px;
-   text-align: center;
 }
 
 header .banner-text { width: 100%; }
 header .banner-text h1 {
-   font: 200px/2.0em 'scribble', cursive;
-   color: #000000b8;
-   margin: 0 auto 18px auto;
+      font: 150px 'scribble', sans-serif;
+      letter-spacing: 1.5px;
+      vertical-align: middle;
+      text-align: center;
+      color: #000000;
+      margin: 0 auto;
 }
 header .banner-text h3 {
    font: 18px/1.9em 'Segoe UI bold', serif;
@@ -805,23 +803,13 @@ call-to-action .button {
 #contact a:hover, #contact a:focus { color: #fff; }
 
 #contact h1 {
-   font: 18px/24px 'opensans-bold', sans-serif;
-   text-transform: uppercase;
+   font: 50px 'scribble', sans-serif;
    letter-spacing: 3px;
    color: #000000;
    margin-bottom: 6px;
+   text-align: center
 }
 #contact h1 span { display: none; }
-#contact h1:before {
-   font-family: 'FontAwesome';
-   content: "\f0e0";
-	padding-right: 10px;
-	font-size: 72px;
-   line-height: 72px;
-   text-align: left;
-   float: left;
-   color: #000000;
-}
 
 #contact h4 {
    font: 16px/24px 'opensans-bold', sans-serif;
@@ -830,7 +818,6 @@ call-to-action .button {
 }
 #contact p.lead {
    font: 18px/36px 'opensans-light', sans-serif;
-   padding-right: 3%;
 }
 #contact .header-col { padding-top: 6px; }
 

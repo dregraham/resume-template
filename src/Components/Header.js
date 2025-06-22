@@ -11,7 +11,7 @@ class Header extends Component {
       num: [2, 4],
       rps: 0.5,
       radius: [10, 30],        // Tighter range for consistent size
-      life: [1.5, 3],
+      life: [10, 20],
       v: [2, 3],
       tha: [-40, 40],
       alpha: [0.6, 0],
@@ -42,7 +42,7 @@ class Header extends Component {
         // Top Middle-Left Puff
         ctx.bezierCurveTo(
           x - size * 1.1, y - size * 1.1,
-          x - size * 0.4, y - size * 1.1,
+          x - size * 0.3, y - size * 1.1,
           x - size * 0.2, y - size * 0.6
         );
     
@@ -127,7 +127,8 @@ class Header extends Component {
         </nav>
         <div className="row banner">
           <div className="banner-text">
-            <h1 className="responsive-headline">{name}</h1>
+            <h1 className="responsive-headline">
+              {name}</h1>
             <h3>{description}.</h3>
             <hr />
             <ul className="social">
