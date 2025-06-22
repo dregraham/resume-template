@@ -4,12 +4,6 @@ class Contact extends Component {
   render() {
     if (!this.props.data) return null;
 
-    const name = this.props.data.name;
-    const street = this.props.data.address.street;
-    const city = this.props.data.address.city;
-    const state = this.props.data.address.state;
-    const zip = this.props.data.address.zip;
-    const phone = this.props.data.phone;
     const message = this.props.data.contactmessage;
 
     return (
@@ -90,7 +84,6 @@ class Contact extends Component {
                   </div>
                 </fieldset>
               </form>
-
               <div id="message-warning"> Error body</div>
               <div id="message-success">
                 <i className="fa fa-check"></i>Your message was sent, thank you!
@@ -98,41 +91,6 @@ class Contact extends Component {
               </div>
             </div>
 
-            <aside className="four columns footer-widgets">
-              <div className="widget widget_contact">
-                <h4>Address and Phone</h4>
-                <p className="address">
-                  {name}
-                  <br />
-                  {street} <br />
-                  {city}, {state} {zip}
-                  <br />
-                  <span>{phone}</span>
-                </p>
-              </div>
-
-           /*   <div className="widget widget_tweets">
-                <h4 className="widget-title">Latest Tweets</h4>
-                <ul id="twitter">
-                  <li>
-                    <span>
-                      React based template for software developer-focused resume websites, created by Tim Baker. 
-                      New version updated and maintained by @Impesud
-                      <a href="https://twitter.com/Impesud/status/1650937757085081606?s=20">React based template</a>
-                    </span>
-                  </li>
-                  <li>
-                    <span>
-                      A signal is a way to store the state of your application, similar to useState in React. 
-                      @mhevery writes about some of the key differences between the two approaches, and shares 
-                      why he believes Signals have the edge.
-                      <a href="https://twitter.com/Impesud/status/1649139629805694986?s=20">Usesignal</a>
-                    </span>
-                  </li>
-                </ul>
-              </div> 
-              */ 
-            </aside>
         </div>
       </section>
     );

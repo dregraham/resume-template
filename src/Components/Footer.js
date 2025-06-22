@@ -21,11 +21,11 @@ class Footer extends Component {
               <ul className="social-links">{networks}</ul>
 
               <ul className="copyright">
-                <li>&copy; Copyright 2023 Resume Project</li>
+                <li>&copy; Copyright 2025</li>
                 <li>
-                  New Project Version Develop and Maintained By{" "}
-                  <a title="Styleshout" href="https://github.com/Impesud">
-                    Impesud
+                  Developed and Maintained By{" "}
+                  <a title="Styleshout" href="https://github.com/dregraham">
+                    Dre Graham
                   </a>
                 </li>
               </ul>
