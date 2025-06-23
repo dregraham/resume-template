@@ -14,7 +14,7 @@
     /* header styles
    ------------------------------------------------------------------ */
    header .banner-text h1 {
-      font: 80px/1.1em 'opensans-bold', sans-serif;
+      font: 80px/1.1em 'desyrelregular', sans-serif;
       letter-spacing: -1px;
       margin: 0 auto 12px auto;
    }
@@ -287,7 +287,7 @@
    #contact { padding-bottom: 66px; }
    #contact .section-head { margin-bottom: 12px; }
    #contact .section-head h1 {
-      font: 16px/24px 'opensans-bold', sans-serif;            
+      font: 16px/24px 'desyrelregular', sans-serif;            
       text-align: center;   
       margin-bottom: 30px;
       text-shadow: 0px 1px 3px rgba(0, 0, 0, 1);

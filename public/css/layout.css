@@ -803,7 +803,7 @@ call-to-action .button {
 #contact a:hover, #contact a:focus { color: #fff; }
 
 #contact h1 {
-   font: 50px 'desyrel', serif;
+   font: 50px 'desyrelregular', serif;
    letter-spacing: 3px;
    color: #000000;
    margin-bottom: 6px;

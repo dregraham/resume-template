@@ -176,8 +176,8 @@
    }
 
    @font-face {
-       font-family: 'scribble';
-       src: url('fonts/scribble/scribble.ttf') format('truetype');
+       font-family: 'desyrelregular';
+       src: url('fonts/desyrel/desyrel_-webfont.svg#desyrel_-webfont') format('svg');
        font-weight: normal;
        font-style: normal;
    }
