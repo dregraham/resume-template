@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Voting API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        #colorWheel {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        #selectedColor {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #333;
+            margin: 20px 0;
+        }
+
+        #colorInfo {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #results {
+            margin-top: 30px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .color-bar {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .color-sample {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .progress-container {
+            flex-grow: 1;
+            height: 20px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 5px;
+        }
+
+        .vote-count {
+            margin-left: 10px;
+            min-width: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Color Voting System</h1>
+
+    <div id="colorWheel"></div>
+
+    <div id="selectedColor"></div>
+
+    <div id="colorInfo">No color selected</div>
+
+    <button id="voteButton">Vote for this color</button>
+
+    <div id="results">
+        <h2>Current Voting Results</h2>
+        <div id="resultsContainer"></div>
+    </div>
+
+    <script>
+        // API endpoint - replace with your actual API endpoint
+        const API_ENDPOINT = 'https://tki9q67dsg.execute-api.us-east-2.amazonaws.com';
+
+        // DOM elements
+        const colorWheel = document.getElementById('colorWheel');
+        const selectedColorDiv = document.getElementById('selectedColor');
+        const colorInfo = document.getElementById('colorInfo');
+        const voteButton = document.getElementById('voteButton');
+        const resultsContainer = document.getElementById('resultsContainer');
+
+        // Variables to store state
+        let selectedColor = null;
+        let ctx;
+        let centerX, centerY, radius;
+
+        // Initialize the color wheel
+        function initColorWheel() {
+            // Create canvas element
+            const canvas = document.createElement('canvas');
+            canvas.width = 300;
+            canvas.height = 300;
+            colorWheel.appendChild(canvas);
+
+            // Get canvas context
+            ctx = canvas.getContext('2d');
+            centerX = canvas.width / 2;
+            centerY = canvas.height / 2;
+            radius = Math.min(centerX, centerY) - 10;
+
+            // Draw the color wheel
+            drawColorWheel();
+
+            // Add click event listener
+            canvas.addEventListener('click', handleColorSelection);
+        }
+
+        // Draw the color wheel on the canvas
+        function drawColorWheel() {
+            // Draw outer circle (hue)
+            for (let angle = 0; angle < 360; angle++) {
+                const startAngle = (angle - 1) * Math.PI / 180;
+                const endAngle = (angle + 1) * Math.PI / 180;
+
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                ctx.closePath();
+
+                // Create gradient from white (center) to full saturation color (edge)
+                const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
+                gradient.addColorStop(0, 'white');
+                gradient.addColorStop(1, `hsl(${angle}, 100%, 50%)`);
+
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            }
+        }
+
+        // Handle color selection when user clicks on the wheel
+        function handleColorSelection(event) {
+            const rect = event.target.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            // Get the color at the clicked position
+            const imageData = ctx.getImageData(x, y, 1, 1).data;
+            const r = imageData[0];
+            const g = imageData[1];
+            const b = imageData[2];
+
+            // Convert RGB to hex
+            const hexColor = rgbToHex(r, g, b);
+            selectedColor = hexColor;
+
+            // Update UI
+            selectedColorDiv.style.backgroundColor = hexColor;
+            colorInfo.textContent = `Selected: ${hexColor}`;
+        }
+
+        // Convert RGB values to hex color string
+        function rgbToHex(r, g, b) {
+            return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
+
+        // Send vote to API
+        function sendVote() {
+            if (!selectedColor) {
+                alert('Please select a color first');
+                return;
+            }
+
+            // Remove # from hex color
+            const colorValue = selectedColor.substring(1);
+
+            // Send GET request to API
+            fetch(`${API_ENDPOINT}/prod/vote?color=${colorValue}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert(`Vote recorded for color: ${selectedColor}`);
+                    // Refresh results after voting
+                    getVotingResults();
+                })
+                .catch(error => {
+                    console.error('Error sending vote:', error);
+                    alert('Failed to send vote. Please try again.');
+                });
+        }
+
+        // Get current voting results
+        function getVotingResults() {
+            fetch(`${API_ENDPOINT}/prod/votes`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayResults(data);
+                })
+                .catch(error => {
+                    console.error('Error getting results:', error);
+                    resultsContainer.innerHTML = '<p>Failed to load results</p>';
+                });
+        }
+
+        // Display voting results
+        function displayResults(data) {
+            // Clear previous results
+            resultsContainer.innerHTML = '';
+
+            // Calculate total votes for percentage
+            let totalVotes = 0;
+            for (const color in data) {
+                totalVotes += data[color];
+            }
+
+            // Sort colors by vote count (descending)
+            const sortedColors = Object.keys(data).sort((a, b) => data[b] - data[a]);
+
+            // Create result bars
+            sortedColors.forEach(color => {
+                const votes = data[color];
+                const percentage = totalVotes > 0 ? (votes / totalVotes * 100).toFixed(1) : 0;
+
+                const colorBar = document.createElement('div');
+                colorBar.className = 'color-bar';
+
+                const colorSample = document.createElement('div');
+                colorSample.className = 'color-sample';
+                colorSample.style.backgroundColor = `#${color}`;
+
+                const progressContainer = document.createElement('div');
+                progressContainer.className = 'progress-container';
+
+                const progressBar = document.createElement('div');
+                progressBar.className = 'progress-bar';
+                progressBar.style.width = `${percentage}%`;
+                progressBar.style.backgroundColor = `#${color}`;
+
+                const voteCount = document.createElement('div');
+                voteCount.className = 'vote-count';
+                voteCount.textContent = `${votes} (${percentage}%)`;
+
+                progressContainer.appendChild(progressBar);
+                colorBar.appendChild(colorSample);
+                colorBar.appendChild(progressContainer);
+                colorBar.appendChild(voteCount);
+
+                resultsContainer.appendChild(colorBar);
+            });
+        }
+
+        // Event listeners
+        voteButton.addEventListener('click', sendVote);
+
+        // Initialize
+        initColorWheel();
+        getVotingResults();
+    </script>
+</body>
+
+</html>
