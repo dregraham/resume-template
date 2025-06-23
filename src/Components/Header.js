@@ -9,7 +9,7 @@ class Header extends Component {
     const description = this.props.data.description;
     let config = {
       num: [2, 4],
-      rps: 0.5,
+      rps: .85,            // The higher the number the slower the particle generation
       radius: [10, 30],        // Tighter range for consistent size
       life: [10, 20],
       v: [2, 3],
