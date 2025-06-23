@@ -12,11 +12,11 @@
 
 @font-face {
     font-family: 'desyrelregular';
-    src: url('fonts/desyrel/Desyrel_-webfont.eot'),
-            url('fonts/desyrel/Desyrel_-webfont.eot?#iefix') format('embedded-opentype'),
-            url('fonts/desyrel/Desyrel_-webfont.woff') format('woff'),
-            url('fonts/desyrel/Desyrel_-webfont.ttf') format('truetype'),
-            url('fonts/desyrel/Desyrel_-webfont.svg#desyrel') format('svg');
+    src: url('fonts/desyrel/desyrel_-webfont.eot'),
+            url('fonts/desyrel/desyrel_-webfont.eot?#iefix') format('embedded-opentype'),
+            url('fonts/desyrel/desyrel_-webfont.woff') format('woff'),
+            url('fonts/desyrel/desyrel_-webfont.ttf') format('truetype'),
+            url('fonts/desyrel/desyrel_-webfont.svg#desyrel') format('svg');
     font-style: normal;
     font-weight: normal;
 }
