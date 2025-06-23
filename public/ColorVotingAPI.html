@@ -200,7 +200,7 @@
             const colorValue = selectedColor.substring(1);
 
             // Send GET request to API
-            fetch(`${API_ENDPOINT}/prod/vote?color=${colorValue}`, {
+            fetch(`${API_ENDPOINT}/production/vote?color=${colorValue}`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json'
@@ -225,7 +225,7 @@
 
         // Get current voting results
         function getVotingResults() {
-            fetch(`${API_ENDPOINT}/prod/votes`, {
+            fetch(`${API_ENDPOINT}/production/votes`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json'
