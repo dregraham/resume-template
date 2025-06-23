@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Voting API</title>
+    <title>Color Voting System</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,10 +11,12 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
+            background-color: #f5f5f5;
         }
 
         h1 {
             margin-bottom: 20px;
+            color: #333;
         }
 
         #colorWheel {
@@ -23,6 +24,7 @@
             height: 300px;
             position: relative;
             margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         #selectedColor {
@@ -30,43 +32,75 @@
             height: 100px;
             border: 2px solid #333;
             margin: 20px 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        #selectedColor:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         #colorInfo {
             margin-bottom: 20px;
             font-size: 18px;
+            color: #666;
         }
 
         button {
-            padding: 10px 20px;
+            padding: 12px 25px;
             font-size: 16px;
             background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
 
         button:hover {
             background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
         }
 
         #results {
             margin-top: 30px;
             width: 80%;
             max-width: 600px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        #results h2 {
+            margin-top: 0;
+            color: #333;
         }
 
         .color-bar {
             display: flex;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             align-items: center;
+            padding: 8px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
         }
 
         .color-sample {
             width: 30px;
             height: 30px;
             margin-right: 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         .progress-container {
@@ -74,20 +108,31 @@
             height: 20px;
             background-color: #f1f1f1;
             border-radius: 5px;
+            margin: 0 10px;
+            overflow: hidden;
         }
 
         .progress-bar {
             height: 100%;
             border-radius: 5px;
+            transition: width 0.3s ease;
         }
 
         .vote-count {
             margin-left: 10px;
             min-width: 50px;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .loading {
+            display: none;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
         }
     </style>
 </head>
-
 <body>
     <h1>Color Voting System</h1>
 
@@ -98,6 +143,7 @@
     <div id="colorInfo">No color selected</div>
 
     <button id="voteButton">Vote for this color</button>
+    <div id="loading" class="loading">Loading...</div>
 
     <div id="results">
         <h2>Current Voting Results</h2>
@@ -113,6 +159,7 @@
         const selectedColorDiv = document.getElementById('selectedColor');
         const colorInfo = document.getElementById('colorInfo');
         const voteButton = document.getElementById('voteButton');
+        const loading = document.getElementById('loading');
         const resultsContainer = document.getElementById('resultsContainer');
 
         // Variables to store state
@@ -182,6 +229,7 @@
             // Update UI
             selectedColorDiv.style.backgroundColor = hexColor;
             colorInfo.textContent = `Selected: ${hexColor}`;
+            voteButton.disabled = false;
         }
 
         // Convert RGB values to hex color string
@@ -190,62 +238,76 @@
         }
 
         // Send vote to API
-        function sendVote() {
-            if (!selectedColor) {
-                alert('Please select a color first');
-                return;
+async function sendVote() {
+    if (!selectedColor) {
+        alert('Please select a color first');
+        return;
+    }
+
+    // Remove # from hex color
+    const colorValue = selectedColor.substring(1);
+
+    try {
+        // Show loading state
+        loading.style.display = 'block';
+        voteButton.disabled = true;
+
+        // Send POST request to record vote
+        const response = await fetch(`${API_ENDPOINT}/production/vote`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                color: colorValue
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        alert(`Vote recorded for color: ${selectedColor}`);
+        
+        // Refresh results after voting
+        await getVotingResults();
+    } catch (error) {
+        console.error('Error sending vote:', error);
+        alert('Failed to send vote. Please try again.');
+    } finally {
+        // Hide loading state
+        loading.style.display = 'none';
+        voteButton.disabled = false;
+    }
+}
+
+// Get current voting results
+async function getVotingResults() {
+    try {
+        loading.style.display = 'block';
+
+        const response = await fetch(`${API_ENDPOINT}/production/votes`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
             }
+        });
 
-            // Remove # from hex color
-            const colorValue = selectedColor.substring(1);
-
-            // Send GET request to API
-            fetch(`${API_ENDPOINT}/production/vote?color=${colorValue}`, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    alert(`Vote recorded for color: ${selectedColor}`);
-                    // Refresh results after voting
-                    getVotingResults();
-                })
-                .catch(error => {
-                    console.error('Error sending vote:', error);
-                    alert('Failed to send vote. Please try again.');
-                });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
 
-        // Get current voting results
-        function getVotingResults() {
-            fetch(`${API_ENDPOINT}/production/votes`, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    displayResults(data);
-                })
-                .catch(error => {
-                    console.error('Error getting results:', error);
-                    resultsContainer.innerHTML = '<p>Failed to load results</p>';
-                });
-        }
-
+        const data = await response.json();
+        displayResults(data);
+    } catch (error) {
+        console.error('Error getting results:', error);
+        resultsContainer.innerHTML = '<p>Failed to load results</p>';
+    } finally {
+        loading.style.display = 'none';
+    }
+}
         // Display voting results
         function displayResults(data) {
             // Clear previous results
@@ -295,11 +357,11 @@
 
         // Event listeners
         voteButton.addEventListener('click', sendVote);
+        voteButton.disabled = true;
 
         // Initialize
         initColorWheel();
         getVotingResults();
     </script>
 </body>
-
 </html>
