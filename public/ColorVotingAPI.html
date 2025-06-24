@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Voting System</title>
+    <title>Color Voting API</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,7 +25,7 @@
             height: 300px;
             position: relative;
             margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         #selectedColor {
@@ -38,7 +39,7 @@
 
         #selectedColor:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         #colorInfo {
@@ -62,7 +63,7 @@
         button:hover {
             background-color: #45a049;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         button:disabled {
@@ -78,7 +79,7 @@
             background-color: white;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
         }
 
         #results h2 {
@@ -100,7 +101,7 @@
             height: 30px;
             margin-right: 10px;
             border-radius: 4px;
-            border: 1px solid rgba(0,0,0,0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .progress-container {
@@ -133,23 +134,28 @@
         }
     </style>
 </head>
+
 <body>
-    <h1>Color Voting System</h1>
-
+    <h1>Pick Your Favorite Color!</h1>
     <div id="colorWheel"></div>
-
     <div id="selectedColor"></div>
-
     <div id="colorInfo">No color selected</div>
-
+    <!-- Hex color input form -->
+    <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 10px;">
+        <input 
+            type="text" 
+            id="hexColorInput" 
+            placeholder="#RRGGBB" 
+            maxlength="7"
+            style="background: #fff; color: #000; border: 1px solid #ccc; border-radius: 6px; padding: 10px; font-size: 16px; text-align: center; width: 140px;"
+        />
+    </div>
     <button id="voteButton">Vote for this color</button>
     <div id="loading" class="loading">Loading...</div>
-
     <div id="results">
         <h2>Current Voting Results</h2>
         <div id="resultsContainer"></div>
     </div>
-
     <script>
         // API endpoint - replace with your actual API endpoint
         const API_ENDPOINT = 'https://tki9q67dsg.execute-api.us-east-2.amazonaws.com';
@@ -161,6 +167,7 @@
         const voteButton = document.getElementById('voteButton');
         const loading = document.getElementById('loading');
         const resultsContainer = document.getElementById('resultsContainer');
+        const hexColorInput = document.getElementById('hexColorInput');
 
         // Variables to store state
         let selectedColor = null;
@@ -238,76 +245,78 @@
         }
 
         // Send vote to API
-async function sendVote() {
-    if (!selectedColor) {
-        alert('Please select a color first');
-        return;
-    }
-
-    // Remove # from hex color
-    const colorValue = selectedColor.substring(1);
-
-    try {
-        // Show loading state
-        loading.style.display = 'block';
-        voteButton.disabled = true;
-
-        // Send POST request to record vote
-        const response = await fetch(`${API_ENDPOINT}/production/vote`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                color: colorValue
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json();
-        alert(`Vote recorded for color: ${selectedColor}`);
-        
-        // Refresh results after voting
-        await getVotingResults();
-    } catch (error) {
-        console.error('Error sending vote:', error);
-        alert('Failed to send vote. Please try again.');
-    } finally {
-        // Hide loading state
-        loading.style.display = 'none';
-        voteButton.disabled = false;
-    }
-}
-
-// Get current voting results
-async function getVotingResults() {
-    try {
-        loading.style.display = 'block';
-
-        const response = await fetch(`${API_ENDPOINT}/production/votes`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json'
+        async function sendVote() {
+            if (!selectedColor) {
+                alert('Please select a color first');
+                return;
             }
-        });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+            // Remove # from hex color
+            const colorValue = selectedColor.substring(1);
+
+            try {
+                // Show loading state
+                loading.style.display = 'block';
+                voteButton.disabled = true;
+
+                // Send POST request to record vote
+                const response = await fetch(`${API_ENDPOINT}/production/vote`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        color: colorValue
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                alert(`Vote recorded for color: ${selectedColor}`);
+
+                // Refresh results after voting
+                await getVotingResults();
+            } catch (error) {
+                console.error('Error sending vote:', error);
+                alert('Failed to send vote. Please try again.');
+            } finally {
+                // Hide loading state
+                loading.style.display = 'none';
+                voteButton.disabled = false;
+            }
         }
 
-        const data = await response.json();
-        displayResults(data);
-    } catch (error) {
-        console.error('Error getting results:', error);
-        resultsContainer.innerHTML = '<p>Failed to load results</p>';
-    } finally {
-        loading.style.display = 'none';
-    }
-}
+        // Get current voting results
+        async function getVotingResults() {
+            try {
+                loading.style.display = 'block';
+
+                const response = await fetch(`${API_ENDPOINT}/production/votes`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const data = await response.json();
+                console.log('Fetched voting results:', data);
+                displayResults(data);
+            } catch (error) {
+                console.error('Error getting results:', error);
+                resultsContainer.innerHTML = '<p>Failed to load results</p>';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
         // Display voting results
         function displayResults(data) {
             // Clear previous results
@@ -355,6 +364,23 @@ async function getVotingResults() {
             });
         }
 
+        // Listen for hex color input changes
+        hexColorInput.addEventListener('input', function () {
+            const value = hexColorInput.value.trim();
+            // Validate hex color: must be # followed by 6 hex digits
+            if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+                selectedColor = value;
+                selectedColorDiv.style.backgroundColor = value;
+                colorInfo.textContent = `Selected: ${value}`;
+                voteButton.disabled = false;
+            } else {
+                // Only disable vote if not already selected by wheel
+                if (!selectedColor || selectedColor !== value) {
+                    voteButton.disabled = true;
+                }
+            }
+        });
+
         // Event listeners
         voteButton.addEventListener('click', sendVote);
         voteButton.disabled = true;
@@ -364,4 +390,5 @@ async function getVotingResults() {
         getVotingResults();
     </script>
 </body>
+
 </html>

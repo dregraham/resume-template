@@ -421,12 +421,11 @@ ul#nav li.current a { color: #000000; }
    padding-bottom: 60px;
 }
 #portfolio h1 {
-   font: 15px/24px 'opensans-semibold', sans-serif;
-   text-transform: uppercase;
-   letter-spacing: 1px;
-   text-align: center;
-   margin-bottom: 48px;
-   color: #000000;
+   font: 50px 'desyrelregular', serif;
+      letter-spacing: 3px;
+      color: #000000;
+      margin-bottom: 25px;
+      text-align: center;
 }
 
 /* Portfolio Content */
