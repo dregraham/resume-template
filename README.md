@@ -1,37 +1,27 @@
-# React Nice Resume :page_with_curl:
+# Dre's Resume Project
 
-### [TEST_ENV](https://master.d2j623qlcgw8p5.amplifyapp.com/#resume)
+### 
 
-<div align="center">
 
-<img alt="GitHub release (latest by date including pre-releases" src="https://img.shields.io/github/v/release/impesud/react-resume?include_prereleases">
+## Deployment
+#### React was used for background elements: [https://github.com/lindelof/particles-bg](https://github.com/lindelof/particles-bg). 
+#### DNS was provided by Route53.
+#### [AWS Amplify](https://master.d2j623qlcgw8p5.amplifyapp.com/#resume) was used for deployment. 
+#### API Gateway was used to create ColorVoterAPI, along with Lambda function that allows users to make calls to API and returns results to endpoint. 
 
-<img alt="GitHub languages" src="https://img.shields.io/github/languages/count/impesud/react-resume?style=flat">
+## Credits
+#### This project uses [https://github.com/tbakerx/react-resume-template](https://github.com/tbakerx/react-resume-template) with some modifications. Thanks to the [author](https://github.com/tbakerx).
 
-<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/impesud/react-resume?style=flat">
+## Run Project
+#### 1. Clone the project
 
-<img alt="GitHub package.json dependency version (prod)" src="https://img.shields.io/github/package-json/dependency-version/impesud/react-resume/react?style=flat">
-
-</div>
-
-# About [`particles-bg`](https://github.com/lindelof/particles-bg) Library
-#### This project uses the react particle background component library [https://github.com/lindelof/particles-bg](https://github.com/lindelof/particles-bg). It's very simple. Anyone can be a Musketeer with it.
-
-![img](https://github.com/lindelof/particles-bg/raw/master/image/03.jpg?raw=true)
-
-# Description
-This project forks from [https://github.com/tbakerx/react-resume-template](https://github.com/tbakerx/react-resume-template) v.1.0.0, I made some modifications and adjustments, thanks to the [author](https://github.com/tbakerx).
-
-# Run Project
-### 1. Clone the project
-
-### 2. Run the project
+#### 2. Run the project
 ```shell
 npm i
 npm start
 ```
 
-### 3. Build
+#### 3. Build
 ```shell
 npm run build
 ```
