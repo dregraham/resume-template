@@ -70,8 +70,8 @@
   "portfolio":{
     "projects": [
       {
-        "title":"Cloud Database Project",
-        "category":"A cloud database project that I worked on during my studies at WGU",
+        "title":"AWS Amplify API",
+        "category":"A HTTP API built with AWS Amplify. It allows users to vote on colors.",
         "image":"01.jpg",
         "url":"ColorVotingAPI.html"
       },
