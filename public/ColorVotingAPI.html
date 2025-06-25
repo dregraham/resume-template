@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../src/styles.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -18,7 +18,7 @@
 
         h1 {
             margin-bottom: 20px;
-            color: #333;
+            color: black;
         }
 
         #colorWheel {
@@ -133,10 +133,44 @@
             text-align: center;
             margin-top: 10px;
         }
+
+        #rainbowResultsCanvas {
+            display: block;
+            margin: 0 auto 20px auto;
+            cursor: pointer;
+        }
+
+        #rainbowTooltip {
+            position: absolute;
+            background: #222;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            pointer-events: none;
+            display: none;
+            z-index: 1000;
+        }
     </style>
 </head>
 
 <body>
+    <button id="downloadHtmlBtn" style="
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        z-index: 2000;
+        background: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 18px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        transition: background 0.2s;
+    ">Download HTML</button>
     <h1>Pick Your Favorite Color!</h1>
     <div id="colorWheel"></div>
     <div id="selectedColor"></div>
@@ -151,244 +185,463 @@
             style="background: #fff; color: #000; border: 1px solid #ccc; border-radius: 6px; padding: 10px; font-size: 16px; text-align: center; width: 140px;"
         />
     </div>
-    <button id="voteButton">Vote for this color</button>
+    <button id="voteButton">Submit</button>
     <div id="loading" class="loading">Loading...</div>
+
     <div id="results">
-        <h2>Current Voting Results</h2>
+        <h2>Vote Results</h2>
         <div id="resultsContainer"></div>
     </div>
+
+    <!-- Tools Used Section -->
+    <div id="toolsUsed" style="margin: 30px 0; width: 80%; max-width: 600px; background: #fffbe7; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 20px;">
+        <h2 style="margin-top:0;">Tools Used</h2>
+        <ul style="font-size: 17px; color: #444; line-height: 1.7;">
+            <li>HTML5 &amp; CSS3</li>
+            <li>Vanilla JavaScript (ES6+)</li>
+            <li>Canvas API (for drawing rainbow and results)</li>
+            <li>AWS Lambda &amp; API Gateway (for backend API)</li>
+            <li>AWS DynamoDB (for vote storage)</li>
+            <li>Fetch API (for HTTP requests)</li>
+            <li>VS Code (for development)</li>
+        </ul>
+    </div>
     <script>
-        // API endpoint - replace with your actual API endpoint
-        const API_ENDPOINT = 'https://tki9q67dsg.execute-api.us-east-2.amazonaws.com';
+const API_ENDPOINT = 'https://tki9q67dsg.execute-api.us-east-2.amazonaws.com';
 
-        // DOM elements
-        const colorWheel = document.getElementById('colorWheel');
-        const selectedColorDiv = document.getElementById('selectedColor');
-        const colorInfo = document.getElementById('colorInfo');
-        const voteButton = document.getElementById('voteButton');
-        const loading = document.getElementById('loading');
-        const resultsContainer = document.getElementById('resultsContainer');
-        const hexColorInput = document.getElementById('hexColorInput');
+// DOM elements
+const colorWheel = document.getElementById('colorWheel');
+const selectedColorDiv = document.getElementById('selectedColor');
+const colorInfo = document.getElementById('colorInfo');
+const voteButton = document.getElementById('voteButton');
+const loading = document.getElementById('loading');
+const resultsContainer = document.getElementById('resultsContainer');
+const hexColorInput = document.getElementById('hexColorInput');
 
-        // Variables to store state
-        let selectedColor = null;
-        let ctx;
-        let centerX, centerY, radius;
+// Variables to store state
+let selectedColor = null;
+let ctx;
+let centerX, centerY, radius;
 
-        // Initialize the color wheel
-        function initColorWheel() {
-            // Create canvas element
-            const canvas = document.createElement('canvas');
-            canvas.width = 300;
-            canvas.height = 300;
-            colorWheel.appendChild(canvas);
+// Rainbow color generation functions
+function generateRainbowColors(count) {
+    const colors = [];
+    const hueStep = 360 / count;
+    for (let i = 0; i < count; i++) {
+        const hue = (hueStep * i) % 360;
+        colors.push(`hsl(${hue}, 70%, 50%)`);
+    }
+    return colors;
+}
 
-            // Get canvas context
-            ctx = canvas.getContext('2d');
-            centerX = canvas.width / 2;
-            centerY = canvas.height / 2;
-            radius = Math.min(centerX, centerY) - 10;
+function getRainbowColor(index, total) {
+    const hue = (index * 360 / total) % 360;
+    return `hsl(${hue}, 70%, 50%)`;
+}
 
-            // Draw the color wheel
-            drawColorWheel();
+// Initialize the color wheel
+function initColorWheel() {
+    colorWheel.innerHTML = '';
+    const canvas = document.createElement('canvas');
+    canvas.width = 300;
+    canvas.height = 300;
+    colorWheel.appendChild(canvas);
 
-            // Add click event listener
-            canvas.addEventListener('click', handleColorSelection);
-        }
+    ctx = canvas.getContext('2d');
+    centerX = canvas.width / 2;
+    centerY = canvas.height / 2;
+    radius = Math.min(centerX, centerY) - 10;
 
-        // Draw the color wheel on the canvas
-        function drawColorWheel() {
-            // Draw outer circle (hue)
-            for (let angle = 0; angle < 360; angle++) {
-                const startAngle = (angle - 1) * Math.PI / 180;
-                const endAngle = (angle + 1) * Math.PI / 180;
+    drawRainbowArc();
 
-                ctx.beginPath();
-                ctx.moveTo(centerX, centerY);
-                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-                ctx.closePath();
+    // Tooltip on hover for color wheel (use a unique ID)
+    let wheelTooltip = document.getElementById('colorWheelTooltip');
+    if (!wheelTooltip) {
+        wheelTooltip = document.createElement('div');
+        wheelTooltip.id = 'colorWheelTooltip';
+        wheelTooltip.style.position = 'absolute';
+        wheelTooltip.style.display = 'none';
+        wheelTooltip.style.background = '#222';
+        wheelTooltip.style.color = '#fff';
+        wheelTooltip.style.padding = '4px 10px';
+        wheelTooltip.style.borderRadius = '5px';
+        wheelTooltip.style.fontSize = '16px';
+        wheelTooltip.style.pointerEvents = 'none';
+        wheelTooltip.style.zIndex = 1000;
+        document.body.appendChild(wheelTooltip);
+    }
 
-                // Create gradient from white (center) to full saturation color (edge)
-                const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
-                gradient.addColorStop(0, 'white');
-                gradient.addColorStop(1, `hsl(${angle}, 100%, 50%)`);
+    canvas.addEventListener('mousemove', function (event) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const dx = x - 150;
+        const dy = y - 180;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        let angle = Math.atan2(dy, dx);
+        if (angle < 0) angle += 2 * Math.PI;
 
-                ctx.fillStyle = gradient;
-                ctx.fill();
+        let found = false;
+        for (const arc of ctx._rainbowArcs) {
+            if (
+                dist >= arc.innerRadius &&
+                dist <= arc.outerRadius &&
+                angle >= arc.start &&
+                angle <= arc.end
+            ) {
+                wheelTooltip.style.display = 'block';
+                wheelTooltip.textContent = arc.name;
+                wheelTooltip.style.left = (event.pageX + 10) + 'px';
+                wheelTooltip.style.top = (event.pageY - 10) + 'px';
+                found = true;
+                break;
             }
         }
-
-        // Handle color selection when user clicks on the wheel
-        function handleColorSelection(event) {
-            const rect = event.target.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-
-            // Get the color at the clicked position
-            const imageData = ctx.getImageData(x, y, 1, 1).data;
-            const r = imageData[0];
-            const g = imageData[1];
-            const b = imageData[2];
-
-            // Convert RGB to hex
-            const hexColor = rgbToHex(r, g, b);
-            selectedColor = hexColor;
-
-            // Update UI
-            selectedColorDiv.style.backgroundColor = hexColor;
-            colorInfo.textContent = `Selected: ${hexColor}`;
-            voteButton.disabled = false;
+        if (!found) {
+            wheelTooltip.style.display = 'none';
         }
+    });
 
-        // Convert RGB values to hex color string
-        function rgbToHex(r, g, b) {
-            return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-        }
+    canvas.addEventListener('mouseleave', function () {
+        wheelTooltip.style.display = 'none';
+    });
+}
 
-        // Send vote to API
-        async function sendVote() {
-            if (!selectedColor) {
-                alert('Please select a color first');
-                return;
-            }
+function drawRainbowArc() {
+    // Define your 12 rainbow colors and their hex codes
+    const rainbowColors = [
+        { name: 'Red', hex: '#FF0000' },
+        { name: 'Orange', hex: '#FF7F00' },
+        { name: 'Yellow', hex: '#FFFF00' },
+        { name: 'Chartreuse Green', hex: '#7FFF00' },
+        { name: 'Green', hex: '#00FF00' },
+        { name: 'Spring Green', hex: '#00FF7F' },
+        { name: 'Cyan', hex: '#00FFFF' },
+        { name: 'Azure', hex: '#007FFF' },
+        { name: 'Blue', hex: '#0000FF' },
+        { name: 'Violet', hex: '#8B00FF' },
+        { name: 'Magenta', hex: '#FF00FF' },
+        { name: 'Rose', hex: '#FF007F' }
+    ];
 
-            // Remove # from hex color
-            const colorValue = selectedColor.substring(1);
+    ctx.clearRect(0, 0, 300, 300);
+    const arcWidth = 40;
+    const outerRadius = 140;
+    const innerRadius = outerRadius - arcWidth;
+    const centerX = 150;
+    const centerY = 180;
+    const total = rainbowColors.length;
+    const startAngle = Math.PI;
+    const endAngle = 2 * Math.PI;
+    const angleStep = (endAngle - startAngle) / total;
 
-            try {
-                // Show loading state
-                loading.style.display = 'block';
-                voteButton.disabled = true;
+    // Store arc info for click detection
+    ctx._rainbowArcs = [];
 
-                // Send POST request to record vote
-                const response = await fetch(`${API_ENDPOINT}/production/vote`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        color: colorValue
-                    })
-                });
+    for (let i = 0; i < total; i++) {
+        const color = rainbowColors[i];
+        const arcStart = startAngle + i * angleStep;
+        const arcEnd = arcStart + angleStep;
 
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, outerRadius, arcStart, arcEnd, false);
+        ctx.arc(centerX, centerY, innerRadius, arcEnd, arcStart, true);
+        ctx.closePath();
+        ctx.fillStyle = color.hex;
+        ctx.fill();
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
 
-                const data = await response.json();
-                alert(`Vote recorded for color: ${selectedColor}`);
-
-                // Refresh results after voting
-                await getVotingResults();
-            } catch (error) {
-                console.error('Error sending vote:', error);
-                alert('Failed to send vote. Please try again.');
-            } finally {
-                // Hide loading state
-                loading.style.display = 'none';
-                voteButton.disabled = false;
-            }
-        }
-
-        // Get current voting results
-        async function getVotingResults() {
-            try {
-                loading.style.display = 'block';
-
-                const response = await fetch(`${API_ENDPOINT}/production/votes`, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const data = await response.json();
-                console.log('Fetched voting results:', data);
-                displayResults(data);
-            } catch (error) {
-                console.error('Error getting results:', error);
-                resultsContainer.innerHTML = '<p>Failed to load results</p>';
-            } finally {
-                loading.style.display = 'none';
-            }
-        }
-
-        // Display voting results
-        function displayResults(data) {
-            // Clear previous results
-            resultsContainer.innerHTML = '';
-
-            // Calculate total votes for percentage
-            let totalVotes = 0;
-            for (const color in data) {
-                totalVotes += data[color];
-            }
-
-            // Sort colors by vote count (descending)
-            const sortedColors = Object.keys(data).sort((a, b) => data[b] - data[a]);
-
-            // Create result bars
-            sortedColors.forEach(color => {
-                const votes = data[color];
-                const percentage = totalVotes > 0 ? (votes / totalVotes * 100).toFixed(1) : 0;
-
-                const colorBar = document.createElement('div');
-                colorBar.className = 'color-bar';
-
-                const colorSample = document.createElement('div');
-                colorSample.className = 'color-sample';
-                colorSample.style.backgroundColor = `#${color}`;
-
-                const progressContainer = document.createElement('div');
-                progressContainer.className = 'progress-container';
-
-                const progressBar = document.createElement('div');
-                progressBar.className = 'progress-bar';
-                progressBar.style.width = `${percentage}%`;
-                progressBar.style.backgroundColor = `#${color}`;
-
-                const voteCount = document.createElement('div');
-                voteCount.className = 'vote-count';
-                voteCount.textContent = `${votes} (${percentage}%)`;
-
-                progressContainer.appendChild(progressBar);
-                colorBar.appendChild(colorSample);
-                colorBar.appendChild(progressContainer);
-                colorBar.appendChild(voteCount);
-
-                resultsContainer.appendChild(colorBar);
-            });
-        }
-
-        // Listen for hex color input changes
-        hexColorInput.addEventListener('input', function () {
-            const value = hexColorInput.value.trim();
-            // Validate hex color: must be # followed by 6 hex digits
-            if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
-                selectedColor = value;
-                selectedColorDiv.style.backgroundColor = value;
-                colorInfo.textContent = `Selected: ${value}`;
-                voteButton.disabled = false;
-            } else {
-                // Only disable vote if not already selected by wheel
-                if (!selectedColor || selectedColor !== value) {
-                    voteButton.disabled = true;
-                }
-            }
+        // Save arc info for click/hover
+        ctx._rainbowArcs.push({
+            start: arcStart,
+            end: arcEnd,
+            innerRadius,
+            outerRadius,
+            hex: color.hex,
+            name: color.name
         });
+    }
+}
 
-        // Event listeners
-        voteButton.addEventListener('click', sendVote);
+// Handle color selection when user clicks on the wheel
+function handleColorSelection(event) {
+    const rect = event.target.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    // Get the color at the clicked position
+    const imageData = ctx.getImageData(x, y, 1, 1).data;
+    const r = imageData[0];
+    const g = imageData[1];
+    const b = imageData[2];
+
+    // Convert RGB to hex
+    const hexColor = rgbToHex(r, g, b);
+    selectedColor = hexColor;
+
+    // Update UI
+    selectedColorDiv.style.backgroundColor = hexColor;
+    colorInfo.textContent = `Selected: ${hexColor}`;
+    voteButton.disabled = false;
+}
+
+// Convert RGB values to hex color string
+function rgbToHex(r, g, b) {
+    return (
+        '#' +
+        ((1 << 24) + (r << 16) + (g << 8) + b)
+            .toString(16)
+            .slice(1)
+    );
+}
+
+// Send vote to API
+async function sendVote() {
+    if (!selectedColor) {
+        alert('Please select a color first');
+        return;
+    }
+
+    // Remove # from hex color
+    const colorValue = selectedColor.substring(1);
+
+    try {
+        // Show loading state
+        loading.style.display = 'block';
         voteButton.disabled = true;
 
-        // Initialize
-        initColorWheel();
-        getVotingResults();
+        // Send POST request to record vote
+        const response = await fetch(`${API_ENDPOINT}/production/vote`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                color: colorValue,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        alert(`Vote recorded for color: ${selectedColor}`);
+
+        // Refresh results after voting
+        await getVotingResults();
+    } catch (error) {
+        console.error('Error sending vote:', error);
+        alert('Failed to send vote. Please try again.');
+    } finally {
+        // Hide loading state
+        loading.style.display = 'none';
+        voteButton.disabled = false;
+    }
+}
+
+// Get current voting results
+async function getVotingResults() {
+    try {
+        loading.style.display = 'block';
+
+        const response = await fetch(`${API_ENDPOINT}/production/votes`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        console.log('Fetched voting results:', data);
+        displayResults(data);
+    } catch (error) {
+        console.error('Error getting results:', error);
+        resultsContainer.innerHTML = '<p>Failed to load results</p>';
+    } finally {
+        loading.style.display = 'none';
+    }
+}
+
+// Display voting results as a rainbow
+function displayResults(data) {
+    // Remove previous rainbow canvas if any
+    let oldCanvas = document.getElementById('rainbowResultsCanvas');
+    if (oldCanvas) oldCanvas.remove();
+    let oldTooltip = document.getElementById('rainbowTooltip');
+    if (oldTooltip) oldTooltip.remove();
+
+    // Define your 12 rainbow colors and their hex codes and names
+    const rainbowColors = [
+        { name: 'Red', hex: '#FF0000' },
+        { name: 'Orange', hex: '#FF7F00' },
+        { name: 'Yellow', hex: '#FFFF00' },
+        { name: 'Chartreuse Green', hex: '#7FFF00' },
+        { name: 'Green', hex: '#00FF00' },
+        { name: 'Spring Green', hex: '#00FF7F' },
+        { name: 'Cyan', hex: '#00FFFF' },
+        { name: 'Azure', hex: '#007FFF' },
+        { name: 'Blue', hex: '#0000FF' },
+        { name: 'Violet', hex: '#8B00FF' },
+        { name: 'Magenta', hex: '#FF00FF' },
+        { name: 'Rose', hex: '#FF007F' }
+    ];
+
+    // Prepare data
+    let totalVotes = 0;
+    for (const color in data) totalVotes += data[color];
+
+    // Keep the order of rainbowColors for display
+    const sortedColors = rainbowColors.map(c => {
+        const hex = c.hex.replace('#', '').toUpperCase();
+        // Find the actual key in data (case-insensitive)
+        const key = Object.keys(data).find(k => k.toUpperCase() === hex) || hex;
+        return {
+            ...c,
+            votes: data[key] || 0,
+            hexKey: key
+        };
+    });
+
+    // Canvas setup
+    const width = 500;
+    const height = 250;
+    const centerX = width / 2;
+    const centerY = height * 1.1; // so the arcs are at the bottom
+    const outerRadius = height * 0.95;
+    const innerRadius = height * 0.45;
+
+    const canvas = document.createElement('canvas');
+    canvas.id = 'rainbowResultsCanvas';
+    canvas.width = width;
+    canvas.height = height;
+    resultsContainer.innerHTML = '';
+    resultsContainer.appendChild(canvas);
+
+    // Tooltip
+    const tooltip = document.createElement('div');
+    tooltip.id = 'rainbowTooltip';
+    document.body.appendChild(tooltip);
+
+    // Draw arcs and store info for hover
+    let startAngle = Math.PI;
+    const ctx = canvas.getContext('2d');
+    canvas._arcs = [];
+    sortedColors.forEach((colorObj, i) => {
+        const votes = colorObj.votes;
+        if (votes === 0) return;
+        const percentage = totalVotes > 0 ? votes / totalVotes : 0;
+        const arcAngle = Math.PI * percentage;
+        const hexColor = colorObj.hex;
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, outerRadius, startAngle, startAngle + arcAngle, false);
+        ctx.arc(centerX, centerY, innerRadius, startAngle + arcAngle, startAngle, true);
+        ctx.closePath();
+        ctx.fillStyle = hexColor;
+        ctx.fill();
+
+        // Store arc info for hover
+        canvas._arcs.push({
+            start: startAngle,
+            end: startAngle + arcAngle,
+            color: hexColor,
+            name: colorObj.name,
+            votes: votes
+        });
+
+        startAngle += arcAngle;
+    });
+
+    // Mouse move for tooltip
+    canvas.addEventListener('mousemove', function (e) {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const dx = x - centerX;
+        const dy = y - centerY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        let angle = Math.atan2(dy, dx);
+        if (angle < 0) angle += 2 * Math.PI; // Normalize angle to [0, 2PI]
+
+        let found = false;
+        if (
+            dist >= innerRadius &&
+            dist <= outerRadius &&
+            angle >= Math.PI &&
+            angle <= 2 * Math.PI &&
+            canvas._arcs
+        ) {
+            for (const arc of canvas._arcs) {
+                if (angle >= arc.start && angle <= arc.end) {
+                    tooltip.style.display = 'block';
+                    tooltip.textContent = `${arc.name}: ${arc.votes} vote${arc.votes === 1 ? '' : 's'}`;
+                    tooltip.style.left = (e.pageX + 10) + 'px';
+                    tooltip.style.top = (e.pageY - 10) + 'px';
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (!found) {
+            tooltip.style.display = 'none';
+        }
+    });
+
+    canvas.addEventListener('mouseleave', function () {
+        tooltip.style.display = 'none';
+    });
+}
+
+// Listen for hex color input changes
+hexColorInput.addEventListener('input', function () {
+    const value = hexColorInput.value.trim();
+    // Validate hex color: must be # followed by 6 hex digits
+    if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+        selectedColor = value;
+        selectedColorDiv.style.backgroundColor = value;
+        colorInfo.textContent = `Selected: ${value}`;
+        voteButton.disabled = false;
+    } else {
+        // Only disable vote if not already selected by wheel
+        if (!selectedColor || selectedColor !== value) {
+            voteButton.disabled = true;
+        }
+    }
+});
+
+// Event listeners
+voteButton.addEventListener('click', sendVote);
+voteButton.disabled = true;
+
+document.addEventListener('DOMContentLoaded', function () {
+    initColorWheel();
+    getVotingResults();
+});
+
+// Download HTML button functionality
+document.getElementById('downloadHtmlBtn').addEventListener('click', function () {
+    // Get the current HTML as a string
+    const htmlContent = document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+
+    // Create a temporary link and trigger download
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'ColorVotingAPI.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+});
     </script>
 </body>
 

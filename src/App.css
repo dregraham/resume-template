@@ -1,4 +1,4 @@
-/* Set the entire site background to a gradient of #5BCEFA and #F5A9B8 */
+/* Set the entire site background to a gradient of #5BCEFA and #F5A9B8
 body {
     min-height: 100vh;
     margin: 0;
@@ -7,3 +7,5 @@ body {
     background-attachment: fixed;
     background-repeat: repeat;
     background-size: cover; }
+
+     */

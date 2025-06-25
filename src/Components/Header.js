@@ -7,6 +7,7 @@ class Header extends Component {
     const github = this.props.data.github;
     const name = this.props.data.name;
     const description = this.props.data.description;
+    // Particle configuration for a cloud-like effect
     let config = {
       num: [2, 4],
       rps: .85,            // The higher the number the slower the particle generation
@@ -17,7 +18,7 @@ class Header extends Component {
       alpha: [0.6, 0],
       scale: [1, 0.1],
       position: "all",          // Cloud can appear anywhere
-      color: "white",
+      color: "random",
       cross: "bround",
       random: null,
       g: 0,
@@ -88,8 +89,16 @@ class Header extends Component {
       }
     };    
     return (
-      <header id="home">
-      <ParticlesBg type="custom" config={config} bg={true} />
+      <header id="home"
+      style={{ 
+              backgroundImage: "url('/images/background.jpg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      minHeight: "50vh"
+      }}>
+
+     {/*<ParticlesBg type="custom" config={config} bg={false} /> } */ }
       <nav id="nav-wrap">
         <a className="mobile-btn" href="#nav-wrap" title="Show navigation">
         Show navigation
@@ -98,7 +107,7 @@ class Header extends Component {
         Hide navigation
         </a>
         <ul id="nav" className="nav">
-        <li className="current">
+        <li>
           <a className="smoothscroll" href="#home">
           Home
           </a>
@@ -126,18 +135,18 @@ class Header extends Component {
         </ul>
       </nav>
       <div className="row banner">
-        <div className="banner-text">
-        <h1 className="responsive-headline">
-          {name}</h1>
-        <h3>{description}.</h3>
-        <hr />
-        <ul className="social">
-          <a href={github} className="button btn github-btn">
-          <i className="fa fa-github"></i>Github
-          </a>
-        </ul>
-        </div>
-      </div>
+                <div className="banner-text">
+                        <h1 className="responsive-headline">
+                                  {name}</h1>
+                                          <h3>{description}</h3>
+                                                  <hr />
+                                                          <ul className="social">
+                                                                    <a href={github} className="button btn github-btn">
+                                                                              <i className="fa fa-github"></i>Github
+                                                                                        </a>
+                                                                                                </ul>
+                                                                                                        </div>
+                                                                                                              </div>
       <p className="scrolldown">
         <a className="smoothscroll" href="#about">
         <i className="icon-down-circle"></i>
