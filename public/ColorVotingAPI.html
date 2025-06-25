@@ -175,16 +175,6 @@
     <div id="colorWheel"></div>
     <div id="selectedColor"></div>
     <div id="colorInfo">No color selected</div>
-    <!-- Hex color input form -->
-    <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 10px;">
-        <input 
-            type="text" 
-            id="hexColorInput" 
-            placeholder="#RRGGBB" 
-            maxlength="7"
-            style="background: #fff; color: #000; border: 1px solid #ccc; border-radius: 6px; padding: 10px; font-size: 16px; text-align: center; width: 140px;"
-        />
-    </div>
     <button id="voteButton">Submit</button>
     <div id="loading" class="loading">Loading...</div>
 
@@ -305,6 +295,8 @@ function initColorWheel() {
     canvas.addEventListener('mouseleave', function () {
         wheelTooltip.style.display = 'none';
     });
+
+    canvas.addEventListener('click', handleColorSelection);
 }
 
 function drawRainbowArc() {
@@ -370,21 +362,27 @@ function handleColorSelection(event) {
     const rect = event.target.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
+    const dx = x - 150;
+    const dy = y - 180;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    let angle = Math.atan2(dy, dx);
+    if (angle < 0) angle += 2 * Math.PI;
 
-    // Get the color at the clicked position
-    const imageData = ctx.getImageData(x, y, 1, 1).data;
-    const r = imageData[0];
-    const g = imageData[1];
-    const b = imageData[2];
-
-    // Convert RGB to hex
-    const hexColor = rgbToHex(r, g, b);
-    selectedColor = hexColor;
-
-    // Update UI
-    selectedColorDiv.style.backgroundColor = hexColor;
-    colorInfo.textContent = `Selected: ${hexColor}`;
-    voteButton.disabled = false;
+    for (const arc of ctx._rainbowArcs) {
+        if (
+            dist >= arc.innerRadius &&
+            dist <= arc.outerRadius &&
+            angle >= arc.start &&
+            angle <= arc.end
+        ) {
+            selectedColor = arc.hex;
+            selectedColorDiv.style.backgroundColor = arc.hex;
+            colorInfo.textContent = `Selected: ${arc.name}`;
+            // hexColorInput.value = arc.hex; // <-- Remove or keep commented out
+            voteButton.disabled = false; // <-- This enables the Submit button
+            break;
+        }
+    }
 }
 
 // Convert RGB values to hex color string
@@ -429,7 +427,11 @@ async function sendVote() {
         }
 
         const data = await response.json();
-        alert(`Vote recorded for color: ${selectedColor}`);
+        const colorObj = ctx._rainbowArcs
+            ? ctx._rainbowArcs.find(c => c.hex.toUpperCase() === selectedColor.toUpperCase())
+            : null;
+        const colorName = colorObj ? colorObj.name : selectedColor;
+        alert(`${colorName} has been added to the voting results!`);
 
         // Refresh results after voting
         await getVotingResults();
@@ -601,21 +603,20 @@ function displayResults(data) {
 }
 
 // Listen for hex color input changes
-hexColorInput.addEventListener('input', function () {
-    const value = hexColorInput.value.trim();
-    // Validate hex color: must be # followed by 6 hex digits
-    if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
-        selectedColor = value;
-        selectedColorDiv.style.backgroundColor = value;
-        colorInfo.textContent = `Selected: ${value}`;
-        voteButton.disabled = false;
-    } else {
-        // Only disable vote if not already selected by wheel
-        if (!selectedColor || selectedColor !== value) {
-            voteButton.disabled = true;
-        }
-    }
-});
+// hexColorInput.addEventListener('input', function () {
+//     const value = hexColorInput.value.trim();
+//     // Validate hex color: must be # followed by 6 hex digits
+//     if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+//         selectedColor = value;
+//         selectedColorDiv.style.backgroundColor = value;
+//         colorInfo.textContent = `Selected: Custom Color`; // <-- Only show "Custom Color" or nothing
+//         voteButton.disabled = false;
+//     } else {
+//         if (!selectedColor || selectedColor !== value) {
+//             voteButton.disabled = true;
+//         }
+//     }
+// });
 
 // Event listeners
 voteButton.addEventListener('click', sendVote);
