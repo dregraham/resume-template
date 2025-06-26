@@ -70,22 +70,22 @@
   "projects":{
     "projectdetails": [
       {
-        "title":"AWS Amplify API",
+        "title":"Favorite Color API",
         "category":"A HTTP API built with AWS Amplify. It allows users to vote on colors.",
-        "image":"01.jpg",
+        "image":"favorite_color_api.png",
         "url":"ColorVotingAPI.html"
       },
       {
         "title":"AI Project",
         "category":"A project I used AI to complete.",
-        "image":"02.jpg",
-        "url":"https://github.com/dregraham/resume-test"
+        "image":"coming_soon.jpg",
+        "url":""
       },
       {
         "title":"Multi-Cloud Deployment",
         "category":"A cloud deployment project that includes multiple cloud providers.",
-        "image":"03.jpg",
-        "url":"https://github.com/dregraham/resume-test"
+        "image":"coming_soon.jpg",
+        "url":""
       }
     ]
   }

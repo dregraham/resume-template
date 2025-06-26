@@ -11,10 +11,13 @@ class projects extends Component {
       return (
         <div key={id++} className="columns projects-item">
           <div className="item-wrap">
-            <a href={project.url} target="_blank" rel="noopener noreferrer">
-              <img alt={project.title} src={projectImage} />
-            </a>
-            <div style={{ textAlign: "center" }}>{project.title}</div>
+        <a href={project.url} target="_blank" rel="noopener noreferrer">
+          <img alt={project.title} src={projectImage} />
+        </a>
+        <div style={{ textAlign: "center" }}>
+          {project.title}
+          <div style={{ fontSize: "0.9em", color: "#888" }}>{project.category}</div>
+        </div>
           </div>
         </div>
       );
@@ -24,7 +27,7 @@ class projects extends Component {
       <section id="projects">
         <div className="row">
           <div className="twelve columns collapsed">
-            <h1>Check Out Some of My Projects.</h1>
+            <h1>Check Out Some of My Projects</h1>
 
             <div
               id="projects-wrapper"
