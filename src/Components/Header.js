@@ -10,18 +10,18 @@ class Header extends Component {
     // Particle configuration for a cloud-like effect
     let config = {
       num: [2, 4],
-      rps: .85,            // The higher the number the slower the particle generation
-      radius: [10, 30],        // Tighter range for consistent size
+      rps: 0.2,
+      radius: [10, 30],
       life: [10, 20],
-      v: [2, 3],
-      tha: [-40, 40],
+      v: [0.2, 0.5],
+      tha: [90, 90], 
       alpha: [0.6, 0],
       scale: [1, 0.1],
-      position: "all",          // Cloud can appear anywhere
+      position: "all", 
       color: "random",
-      cross: "bround",
-      random: null,
-      g: 0,
+      cross: "dead",
+      random: 15,
+      g: -0.1, // slight negative gravity to help float up
       onParticleUpdate: (ctx, particle) => {
         ctx.globalCompositeOperation = 'source-over';
         ctx.beginPath();
@@ -91,14 +91,15 @@ class Header extends Component {
     return (
       <header id="home"
       style={{ 
-              backgroundImage: "url('/images/background.jpg')",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      minHeight: "50vh"
+              //backgroundImage: "url('/images/background.jpg')",
+    backgroundSize: "contain",
+     backgroundPosition: "center",
+     backgroundRepeat: "no-repeat",
+     minHeight: "100vh",
+     position: "relative"
       }}>
 
-     {/*<ParticlesBg type="custom" config={config} bg={false} /> } */ }
+     {<ParticlesBg type="custom" config={config} bg={true} />}
       <nav id="nav-wrap">
         <a className="mobile-btn" href="#nav-wrap" title="Show navigation">
         Show navigation
@@ -123,7 +124,7 @@ class Header extends Component {
           </a>
         </li>
         <li>
-          <a className="smoothscroll" href="#portfolio">
+          <a className="smoothscroll" href="#projects">
           Projects
           </a>
         </li>

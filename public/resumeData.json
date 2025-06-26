@@ -67,8 +67,8 @@
       }
     ]
   },
-  "portfolio":{
-    "projects": [
+  "projects":{
+    "projectdetails": [
       {
         "title":"AWS Amplify API",
         "category":"A HTTP API built with AWS Amplify. It allows users to vote on colors.",
