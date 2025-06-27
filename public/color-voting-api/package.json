@@ -1,0 +1,22 @@
+{
+  "name": "color-voting-api",
+  "version": "1.0.0",
+  "description": "A color voting application that allows users to select their favorite colors and submit votes.",
+  "main": "src/ColorVotingAPI.js",
+  "scripts": {
+    "start": "live-server public",
+    "build": "echo 'Build step not defined'",
+    "test": "echo 'No tests defined'"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "live-server": "^1.2.1"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "color",
+    "voting",
+    "application"
+  ]
+}

@@ -1,202 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+// ColorVotingAPI.js
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Voting API</title>
-    <link rel="stylesheet" href="../src/styles.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-            color: black;
-        }
-
-        #colorWheel {
-            width: 300px;
-            height: 300px;
-            position: relative;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        #selectedColor {
-            width: 100px;
-            height: 100px;
-            border: 2px solid #333;
-            margin: 20px 0;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        #selectedColor:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        #colorInfo {
-            margin-bottom: 20px;
-            font-size: 18px;
-            color: #666;
-        }
-
-        button {
-            padding: 12px 25px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        button:hover {
-            background-color: #45a049;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        #results {
-            margin-top: 30px;
-            width: 80%;
-            max-width: 600px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        #results h2 {
-            margin-top: 0;
-            color: #333;
-        }
-
-        .color-bar {
-            display: flex;
-            margin-bottom: 15px;
-            align-items: center;
-            padding: 8px;
-            background-color: #f9f9f9;
-            border-radius: 6px;
-        }
-
-        .color-sample {
-            width: 30px;
-            height: 30px;
-            margin-right: 10px;
-            border-radius: 4px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        .progress-container {
-            flex-grow: 1;
-            height: 20px;
-            background-color: #f1f1f1;
-            border-radius: 5px;
-            margin: 0 10px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            border-radius: 5px;
-            transition: width 0.3s ease;
-        }
-
-        .vote-count {
-            margin-left: 10px;
-            min-width: 50px;
-            font-weight: 500;
-            color: #666;
-        }
-
-        .loading {
-            display: none;
-            color: #666;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        #rainbowResultsCanvas {
-            display: block;
-            margin: 0 auto 20px auto;
-            cursor: pointer;
-        }
-
-        #rainbowTooltip {
-            position: absolute;
-            background: #222;
-            color: #fff;
-            padding: 4px 10px;
-            border-radius: 5px;
-            font-size: 16px;
-            pointer-events: none;
-            display: none;
-            z-index: 1000;
-        }
-    </style>
-</head>
-
-<body>
-    <button id="downloadHtmlBtn" style="
-        position: absolute;
-        top: 20px;
-        right: 30px;
-        z-index: 2000;
-        background: #4CAF50;
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        padding: 10px 18px;
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        transition: background 0.2s;
-    ">Download This Project</button>
-    <h1>Pick Your Favorite Color!</h1>
-    <div id="colorWheel"></div>
-    <div id="selectedColor"></div>
-    <div id="colorInfo">No color selected</div>
-    <button id="voteButton">Submit</button>
-    <div id="loading" class="loading">Loading...</div>
-
-    <div id="results">
-        <h2>Vote Results</h2>
-        <div id="resultsContainer"></div>
-    </div>
-
-    <!-- Tools Used Section -->
-    <div id="toolsUsed" style="margin: 30px 0; width: 80%; max-width: 600px; background: #fffbe7; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 20px;">
-        <h2 style="margin-top:0;">Tools Used</h2>
-        <ul style="font-size: 17px; color: #444; line-height: 1.7;">
-            <li>HTML5 &amp; CSS3</li>
-            <li>Vanilla JavaScript (ES6+)</li>
-            <li>Canvas API (for drawing rainbow and results)</li>
-            <li>AWS Lambda &amp; API Gateway (for backend API)</li>
-            <li>AWS DynamoDB (for vote storage)</li>
-            <li>Fetch API (for HTTP requests)</li>
-            <li>VS Code (for development)</li>
-        </ul>
-    </div>
-    <script>
 const API_ENDPOINT = 'https://tki9q67dsg.execute-api.us-east-2.amazonaws.com';
 
 // DOM elements
@@ -206,7 +9,6 @@ const colorInfo = document.getElementById('colorInfo');
 const voteButton = document.getElementById('voteButton');
 const loading = document.getElementById('loading');
 const resultsContainer = document.getElementById('resultsContainer');
-const hexColorInput = document.getElementById('hexColorInput');
 
 // Variables to store state
 let selectedColor = null;
@@ -244,7 +46,6 @@ function initColorWheel() {
 
     drawRainbowArc();
 
-    // Tooltip on hover for color wheel (use a unique ID)
     let wheelTooltip = document.getElementById('colorWheelTooltip');
     if (!wheelTooltip) {
         wheelTooltip = document.createElement('div');
@@ -300,7 +101,6 @@ function initColorWheel() {
 }
 
 function drawRainbowArc() {
-    // Define your 12 rainbow colors and their hex codes
     const rainbowColors = [
         { name: 'Red', hex: '#FF0000' },
         { name: 'Orange', hex: '#FF7F00' },
@@ -327,7 +127,6 @@ function drawRainbowArc() {
     const endAngle = 2 * Math.PI;
     const angleStep = (endAngle - startAngle) / total;
 
-    // Store arc info for click detection
     ctx._rainbowArcs = [];
 
     for (let i = 0; i < total; i++) {
@@ -345,7 +144,6 @@ function drawRainbowArc() {
         ctx.lineWidth = 2;
         ctx.stroke();
 
-        // Save arc info for click/hover
         ctx._rainbowArcs.push({
             start: arcStart,
             end: arcEnd,
@@ -378,21 +176,10 @@ function handleColorSelection(event) {
             selectedColor = arc.hex;
             selectedColorDiv.style.backgroundColor = arc.hex;
             colorInfo.textContent = `Selected: ${arc.name}`;
-            // hexColorInput.value = arc.hex; // <-- Remove or keep commented out
-            voteButton.disabled = false; // <-- This enables the Submit button
+            voteButton.disabled = false;
             break;
         }
     }
-}
-
-// Convert RGB values to hex color string
-function rgbToHex(r, g, b) {
-    return (
-        '#' +
-        ((1 << 24) + (r << 16) + (g << 8) + b)
-            .toString(16)
-            .slice(1)
-    );
 }
 
 // Send vote to API
@@ -402,15 +189,12 @@ async function sendVote() {
         return;
     }
 
-    // Remove # from hex color
     const colorValue = selectedColor.substring(1);
 
     try {
-        // Show loading state
         loading.style.display = 'block';
         voteButton.disabled = true;
 
-        // Send POST request to record vote
         const response = await fetch(`${API_ENDPOINT}/production/vote`, {
             method: 'POST',
             headers: {
@@ -433,13 +217,11 @@ async function sendVote() {
         const colorName = colorObj ? colorObj.name : selectedColor;
         alert(`${colorName} has been added to the voting results!`);
 
-        // Refresh results after voting
         await getVotingResults();
     } catch (error) {
         console.error('Error sending vote:', error);
         alert('Failed to send vote. Please try again.');
     } finally {
-        // Hide loading state
         loading.style.display = 'none';
         voteButton.disabled = false;
     }
@@ -462,7 +244,6 @@ async function getVotingResults() {
         }
 
         const data = await response.json();
-        console.log('Fetched voting results:', data);
         displayResults(data);
     } catch (error) {
         console.error('Error getting results:', error);
@@ -474,13 +255,9 @@ async function getVotingResults() {
 
 // Display voting results as a rainbow
 function displayResults(data) {
-    // Remove previous rainbow canvas if any
     let oldCanvas = document.getElementById('rainbowResultsCanvas');
     if (oldCanvas) oldCanvas.remove();
-    let oldTooltip = document.getElementById('rainbowTooltip');
-    if (oldTooltip) oldTooltip.remove();
 
-    // Define your 12 rainbow colors and their hex codes and names
     const rainbowColors = [
         { name: 'Red', hex: '#FF0000' },
         { name: 'Orange', hex: '#FF7F00' },
@@ -496,14 +273,11 @@ function displayResults(data) {
         { name: 'Rose', hex: '#FF007F' }
     ];
 
-    // Prepare data
     let totalVotes = 0;
     for (const color in data) totalVotes += data[color];
 
-    // Keep the order of rainbowColors for display
     const sortedColors = rainbowColors.map(c => {
         const hex = c.hex.replace('#', '').toUpperCase();
-        // Find the actual key in data (case-insensitive)
         const key = Object.keys(data).find(k => k.toUpperCase() === hex) || hex;
         return {
             ...c,
@@ -512,11 +286,10 @@ function displayResults(data) {
         };
     });
 
-    // Canvas setup
     const width = 500;
     const height = 250;
     const centerX = width / 2;
-    const centerY = height * 1.1; // so the arcs are at the bottom
+    const centerY = height * 1.1;
     const outerRadius = height * 0.95;
     const innerRadius = height * 0.45;
 
@@ -527,16 +300,14 @@ function displayResults(data) {
     resultsContainer.innerHTML = '';
     resultsContainer.appendChild(canvas);
 
-    // Tooltip
     const tooltip = document.createElement('div');
     tooltip.id = 'rainbowTooltip';
     document.body.appendChild(tooltip);
 
-    // Draw arcs and store info for hover
     let startAngle = Math.PI;
     const ctx = canvas.getContext('2d');
     canvas._arcs = [];
-    sortedColors.forEach((colorObj, i) => {
+    sortedColors.forEach((colorObj) => {
         const votes = colorObj.votes;
         if (votes === 0) return;
         const percentage = totalVotes > 0 ? votes / totalVotes : 0;
@@ -550,7 +321,6 @@ function displayResults(data) {
         ctx.fillStyle = hexColor;
         ctx.fill();
 
-        // Store arc info for hover
         canvas._arcs.push({
             start: startAngle,
             end: startAngle + arcAngle,
@@ -562,7 +332,6 @@ function displayResults(data) {
         startAngle += arcAngle;
     });
 
-    // Mouse move for tooltip
     canvas.addEventListener('mousemove', function (e) {
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -571,7 +340,7 @@ function displayResults(data) {
         const dy = y - centerY;
         const dist = Math.sqrt(dx * dx + dy * dy);
         let angle = Math.atan2(dy, dx);
-        if (angle < 0) angle += 2 * Math.PI; // Normalize angle to [0, 2PI]
+        if (angle < 0) angle += 2 * Math.PI;
 
         let found = false;
         if (
@@ -602,22 +371,6 @@ function displayResults(data) {
     });
 }
 
-// Listen for hex color input changes
-// hexColorInput.addEventListener('input', function () {
-//     const value = hexColorInput.value.trim();
-//     // Validate hex color: must be # followed by 6 hex digits
-//     if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
-//         selectedColor = value;
-//         selectedColorDiv.style.backgroundColor = value;
-//         colorInfo.textContent = `Selected: Custom Color`; // <-- Only show "Custom Color" or nothing
-//         voteButton.disabled = false;
-//     } else {
-//         if (!selectedColor || selectedColor !== value) {
-//             voteButton.disabled = true;
-//         }
-//     }
-// });
-
 // Event listeners
 voteButton.addEventListener('click', sendVote);
 voteButton.disabled = true;
@@ -626,24 +379,3 @@ document.addEventListener('DOMContentLoaded', function () {
     initColorWheel();
     getVotingResults();
 });
-
-// Download HTML button functionality
-document.getElementById('downloadHtmlBtn').addEventListener('click', function () {
-    // Get the current HTML as a string
-    const htmlContent = document.documentElement.outerHTML;
-    const blob = new Blob([htmlContent], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-
-    // Create a temporary link and trigger download
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'ColorVotingAPI.html';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-});
-    </script>
-</body>
-
-</html>

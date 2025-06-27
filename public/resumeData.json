@@ -73,7 +73,7 @@
         "title":"Favorite Color API",
         "category":"A HTTP API built with AWS Amplify. It allows users to vote on colors.",
         "image":"favorite_color_api.png",
-        "url":"ColorVotingAPI.html"
+        "url":"../color-voting-api/public/index.html"
       },
       {
         "title":"AI Project",
