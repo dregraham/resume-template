@@ -9,6 +9,7 @@ import Resume from "./Components/Resume";
 import Contact from "./Components/Contact";
 import Projects from "./Components/Projects";
 
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -41,6 +42,9 @@ class App extends Component {
   }
 
   render() {
+    if (!this.state.resumeData.main) {
+      return <div>Loading...</div>;
+    }
     return (
       <div className="App">
         <Header data={this.state.resumeData.main} />
