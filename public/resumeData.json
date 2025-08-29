@@ -73,7 +73,7 @@
         "title":"Color Voting API",
         "category":"A React API built with AWS Amplify. It allows users to vote on colors.",
         "image":"favorite_color_api.png",
-        "url":"https://dre-graham.com/color-voting-api/index.html"
+        "url":"https://dre-graham.com/color-voting-api/public/index.html" 
       },
       {
         "title":"AI Project",
